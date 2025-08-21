@@ -1,0 +1,45 @@
+:root {
+  --background: #101827;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+.radial-background {
+  --background: radial-gradient(
+    circle,
+    rgba(44, 62, 80, 1) 10%,
+    rgba(22, 34, 51, 0.96) 40%,
+    rgba(12, 19, 34, 1) 80%
+  );
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+/* ✨ 반짝이는 별 애니메이션 */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.stars {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite alternate;
+}
