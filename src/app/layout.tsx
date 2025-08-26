@@ -4,6 +4,7 @@ import NightSky from "../components/nightsky";
 import { Metadata } from "next";
 import DynamicBackground from "./background";
 import { AlbumProvider } from "../context/AlbumContext";
+import PwaRegister from "../components/pwaRegister";
 
 export const metadata: Metadata = {
   title: "별빛다리",
@@ -25,6 +26,7 @@ export const metadata: Metadata = {
     ],
     type: "website",
   },
+  manifest: '/manifest.json', // 메타데이터에 manifest 경로 추가
 };
 
 export default function RootLayout({
@@ -39,6 +41,7 @@ export default function RootLayout({
         <NightSky />
         <DynamicBackground />
         <AlbumProvider>{children}</AlbumProvider>
+        <PwaRegister />
       </body>
     </html>
   );
