@@ -5,7 +5,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # npm 설치
-RUN npm install
+# RUN npm install
+RUN npm install --legacy-peer-deps
 
 COPY . .
 
