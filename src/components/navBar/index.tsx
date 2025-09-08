@@ -1,12 +1,12 @@
 // import "../globals.css";
-import styled from "styled-components";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import chevron_up from "/public/chevron_up.svg";
 import chevron_down from "/public/chevron_down.svg";
 import { useRouter } from "next/navigation";
-import LogoutButton from "./logoutButton";
+import LogoutButton from "../logoutButton";
 import axios from "axios";
+import { Wrapper, Profile, ProfilePhoto, User, UserName, MenuBar, Menu, SubMenu, PetImage, Item, PetItem, ToggleButton, AlertBadge, NoPet, Button } from "./styles"
 
 interface NavBarProps {
   isOpen: boolean;
@@ -197,120 +197,3 @@ const NavBar = ({ isOpen, navRef }: NavBarProps) => {
 };
 
 export default NavBar;
-
-const Wrapper = styled.div<{ isOpen: boolean }>`
-  display: flex;
-  flex-direction: column;
-  background: #0c1322;
-  color: #fff;
-  border-radius: 7px 0 0 7px;
-  position: fixed;
-  top: 0;
-  right: ${({ isOpen }) => (isOpen ? "0" : "-282px")};
-  width: 250px;
-  height: 100vh;
-  padding: 16px;
-  transition: right 0.3s ease-in-out;
-  box-shadow: ${({ isOpen }) =>
-    isOpen ? "-4px 0 10px rgba(0, 0, 0, 0.2)" : "none"};
-  z-index: 1000;
-`;
-
-const Profile = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-bottom: 20px;
-  position: relative;
-`;
-
-const ProfilePhoto = styled(Image)`
-  width: 40px;
-  height: 40px;
-  border-radius: 100px;
-  background: gray;
-`;
-
-const User = styled.div`
-  display: flex;
-  align-items: baseline;
-  gap: 7px;
-  font-size: 13px;
-`;
-
-const UserName = styled.span`
-  font-weight: 900;
-  font-size: 17px;
-`;
-
-const MenuBar = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Menu = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 20px 0 20px 10px;
-  font-weight: 900;
-  font-size: 20px;
-  cursor: pointer;
-  gap: 10px;
-`;
-
-const SubMenu = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-`;
-
-const PetImage = styled(Image)`
-  width: 40px;
-  height: 40px;
-  border-radius: 100px;
-`;
-
-const Item = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 10px;
-  cursor: pointer;
-`;
-
-const PetItem = styled(Item)`
-  background-color: #162132;
-  cursor: pointer;
-`;
-
-const ToggleButton = styled.button`
-  display: flex;
-  align-items: center;
-  border: none;
-  background: none;
-  cursor: pointer;
-`;
-
-const AlertBadge = styled.span``;
-
-const NoPet = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 30px 10px;
-  height: 80px;
-  align-items: center;
-  // justify-content: center;
-  position: relative;
-`;
-
-const Button = styled.button`
-  border: none;
-  background: #22225e;
-  cursor: pointer;
-  padding: 10px 20px;
-  color: #fff;
-  border-radius: 5px;
-  position: absolute;
-  bottom: 10px;
-`;
