@@ -63,30 +63,6 @@ const UserInfo = () => {
         getUserInfo();
     }, []);
 
-
-    // 유저 닉네임 변경
-    // const saveUserNickname = async () => {
-    //   try {
-    //     const response = await axios({
-    //       method: "PUT",
-    //       url: `http://${server_url}:8080/member/name`,
-    //       withCredentials: true,
-    //       headers: {
-    //         "Content-Type": "application/json;charset=utf-8",
-    //       },
-    //       data: {
-    //         nickname: nickname,
-    //       },
-    //     });
-
-    //     console.log("서버 응답:", response);
-    //   } catch (error) {
-    //     console.error("유저 닉네임 수정 중 오류 발생:", error);
-    //   }
-    //   setIsEditingNickname(false);
-    //   await getUserInfo();
-    // };
-
     // 로딩 시 스켈레톤 UI 변경 필요
     // if (loading) {
     //     return <SkeletonUI />;
