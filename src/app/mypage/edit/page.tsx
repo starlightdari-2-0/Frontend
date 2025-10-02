@@ -5,10 +5,12 @@ import axios from "axios";
 import Image from "next/image";
 import X from "/public/inputbox_X.svg";
 import { BackButton, CharCount, ClearButton, Container, Header, Input, InputWrapper, Label, ProfileImage, SubmitButton, Title } from "./styles";
+import { useRouter } from "next/navigation";
 
 const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
 
 const ProfileEdit = ({ getUserInfo }: { getUserInfo: () => Promise<void> }) => {
+    const router = useRouter();
     const [nickname, setNickname] = useState("");
     const [isEditingNickname, setIsEditingNickname] = useState(true);
     const maxLength = 20;
@@ -38,7 +40,7 @@ const ProfileEdit = ({ getUserInfo }: { getUserInfo: () => Promise<void> }) => {
     return (
         <Container>
             <Header>
-                <BackButton>{"<"}</BackButton>
+                <BackButton onClick={() => router.push("/mypage/myInfo")}>{"<"}</BackButton>
                 <Title>프로필 편집</Title>
             </Header>
 
