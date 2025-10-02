@@ -45,6 +45,16 @@ export const Title = styled.h2`
   line-height: 150%;
 `;
 
+export const More = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 0px;
+  align-items: center;
+  display: flex;
+`;
+
 export const Row = styled.div`
   display: flex;
   gap: 8px;

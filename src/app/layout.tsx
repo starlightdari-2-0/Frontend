@@ -3,6 +3,7 @@ import "./globals.css";
 import { Metadata } from "next";
 import StyledComponentsRegistry from "./lib/registry";
 import Providers from "./providers";
+import GlobalModal from "../components/modal/GlobalModal";
 
 export const metadata: Metadata = {
   title: "별빛다리",
@@ -38,6 +39,7 @@ export default function RootLayout({
           <GlobalStyle />
           <Providers>
             {children}
+            <GlobalModal />
           </Providers>
         </StyledComponentsRegistry>
       </body>

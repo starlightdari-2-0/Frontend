@@ -14,6 +14,7 @@ export interface PetInfoData {
   pet_id: number;
   pet_img: string;
   pet_name: string;
+  animal_type: string;
   species: string;
   gender: string;
   birth_date: string;
@@ -21,6 +22,7 @@ export interface PetInfoData {
   personality: string;
   member_id: number;
   nickname: string;
+  context: string;
 }
 
 const GenderMap: Record<string, string> = {
@@ -42,13 +44,15 @@ const mockPetData: PetInfoData = {
   pet_id: 123,
   pet_img: "/maru.png",
   pet_name: "루비",
-  species: "강아지",
+  animal_type: "강아지",
+  species: "치와와",
   gender: "FEMALE",
   birth_date: "2018.05.20",
   death_date: "2024.10.02",
   personality: "CHARMING",
   member_id: 456,
   nickname: "별빛주인",
+  context: "너무 귀여운 우리 루비"
 };
 
 export default function Page() {
@@ -82,37 +86,14 @@ export default function Page() {
     // try {
     //     const response = await axios({
     //         method: "GET",
-    //         url: `http://${server_url}:8080/pets/${petId}`, // 실제 URL 사용
+    //         url: `http://${server_url}:8080/pets/${petId}`,
     //         withCredentials: true,
     //     });
     //     return response.data;
     // } catch (error) {
     //     console.error("반려동물 정보 요청 중 오류 발생:", error);
-    //     throw error; // TanStack Query는 에러를 throw 해야 합니다.
-    // }
+    //     throw error;
   };
-
-
-  // const handleDelete = async () => {
-  //   if (
-  //     confirm(
-  //       "동물 정보를 삭제하시면 별자리가 사라질 거에요. 정말 삭제하시겠어요?"
-  //     )
-  //   ) {
-  //     try {
-  //       await axios.delete(`http://${server_url}:8080/pets/${petId}`, {
-  //         withCredentials: true,
-  //       });
-
-  //       alert("반려동물이 삭제되었어요.");
-  //       router.push(`/mypage/myInfo`);
-  //     } catch (error) {
-  //       console.error("동물 정보 삭제 중 오류 발생:", error);
-  //     }
-  //   } else {
-  //     console.log("동물 정보 삭제 취소");
-  //   }
-  // };
 
   if (isLoading) {
     return (
@@ -141,12 +122,14 @@ export default function Page() {
       <Body>
         {petData ? (
           <PetCard
+            petId={petData.pet_id}
             name={petData.pet_name}
             startDate={petData.birth_date}
             endDate={petData.death_date}
+            animalType={petData.animal_type}
             breed={petData.species}
             count={0}
-            description={petData.personality ? PersonalityMap[petData.personality] : ""}
+            description={petData.context}
             gender={petData.gender ? GenderMap[petData.gender] : ""}
             personality={petData.personality ? PersonalityMap[petData.personality] : ""}
             imageUrl={petData.pet_img}
