@@ -3,21 +3,24 @@
 import React from "react";
 import styled from "styled-components";
 import TabMenu from "../../../components/activity/tabMenu";
+import { useRouter } from "next/navigation";
 
 export default function MyActivityLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+
   return (
     <Container>
       <Header>
-        <BackButton onClick={() => history.back()}>←</BackButton>
+        <BackButton onClick={() => router.push("/mypage/myInfo")}>←</BackButton>
         <Title>나의 활동</Title>
       </Header>
       <TabMenu />
       <Content>{children}</Content>
-    </Container>
+    </Container >
   );
 }
 

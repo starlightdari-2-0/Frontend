@@ -4,19 +4,22 @@ import article from "/public/myArticle.svg";
 import comment from "/public/myComment.svg";
 import letter from "/public/myLetter.svg";
 import { Menu, MenuItem } from "./styles";
+import { useRouter } from "next/navigation";
 
 const ActivityMenu: React.FC = () => {
+    const router = useRouter();
+
     return (
         <Menu>
-            <MenuItem>
+            <MenuItem onClick={() => router.push("/mypage/activity/letters")}>
                 <Image src={letter} alt="letter" />
                 편지
             </MenuItem>
-            <MenuItem>
+            <MenuItem onClick={() => router.push("/mypage/activity/posts")}>
                 <Image src={article} alt="article" />
                 내 게시글
             </MenuItem>
-            <MenuItem isLast>
+            <MenuItem isLast onClick={() => router.push("/mypage/activity/comments")}>
                 <Image src={comment} alt="comment" />
                 내 댓글
             </MenuItem>

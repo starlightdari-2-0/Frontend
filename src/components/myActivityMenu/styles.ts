@@ -11,9 +11,11 @@ export const Menu = styled.div`
   border-radius: 16px;
 `;
 
-export const MenuItem = styled.div<{ isLast?: boolean }>`
+export const MenuItem = styled.button<{ isLast?: boolean }>`
   flex: 1;
   color: #D9E0ED;
+  background: none;
+  border: none;
   display: flex;
   flex-direction: column;
   align-items: center;
