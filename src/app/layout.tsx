@@ -1,9 +1,9 @@
 import GlobalStyle from "./styles/globalStyles";
 import "./globals.css";
-import NightSky from "../components/nightsky";
 import { Metadata } from "next";
-import DynamicBackground from "./background";
-import { AlbumProvider } from "../context/AlbumContext";
+import StyledComponentsRegistry from "./lib/registry";
+import Providers from "./providers";
+import GlobalModal from "../components/modal/GlobalModal";
 
 export const metadata: Metadata = {
   title: "별빛다리",
@@ -35,10 +35,13 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <GlobalStyle />
-        <NightSky />
-        <DynamicBackground />
-        <AlbumProvider>{children}</AlbumProvider>
+        <StyledComponentsRegistry>
+          <GlobalStyle />
+          <Providers>
+            {children}
+            <GlobalModal />
+          </Providers>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );

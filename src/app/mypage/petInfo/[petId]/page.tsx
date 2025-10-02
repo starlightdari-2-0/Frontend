@@ -1,18 +1,20 @@
 "use client";
 
 // import "../globals.css";
-import styled from "styled-components";
 import React, { useEffect, useState } from "react";
 import Header from "../../../../components/header";
 import Image from "next/image";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
-import EditingAnimalInfo from "../../../../components/editingAnimalInfo";
+import { Body } from "./styles";
+import PetCard from "../../../../components/petCard";
+import { useQuery } from "@tanstack/react-query";
 
 export interface PetInfoData {
   pet_id: number;
   pet_img: string;
   pet_name: string;
+  animal_type: string;
   species: string;
   gender: string;
   birth_date: string;
@@ -20,6 +22,7 @@ export interface PetInfoData {
   personality: string;
   member_id: number;
   nickname: string;
+  context: string;
 }
 
 const GenderMap: Record<string, string> = {
@@ -37,65 +40,62 @@ const PersonalityMap: Record<string, string> = {
   SENSITIVE: "감수성이 풍부해요",
 };
 
+const mockPetData: PetInfoData = {
+  pet_id: 123,
+  pet_img: "/maru.png",
+  pet_name: "루비",
+  animal_type: "강아지",
+  species: "치와와",
+  gender: "FEMALE",
+  birth_date: "2018.05.20",
+  death_date: "2024.10.02",
+  personality: "CHARMING",
+  member_id: 456,
+  nickname: "별빛주인",
+  context: "너무 귀여운 우리 루비"
+};
+
 export default function Page() {
-  const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
   const router = useRouter();
   const params = useParams();
   const petId = Number(params.petId);
 
-  const [petData, setPetData] = useState<PetInfoData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [isEditing, setIsEditing] = useState(false);
+  const {
+    data: petData,
+    isLoading,
+    isError,
+    error
+  } = useQuery<PetInfoData | null>({
+    queryKey: ["petInfo", petId], // 쿼리 키에 petId를 포함하여 URL 변경 시 refetch되도록 설정
+    queryFn: () => getUsersPetInfo(petId),
+    enabled: !!petId && petId > 0, // petId가 유효할 때만 쿼리를 실행합니다.
+    staleTime: 5 * 60 * 1000, // 5분 동안은 데이터를 신선하게 간주하여 재요청 방지
+  });
 
-  const getUsersPetInfo = async () => {
-    try {
-      const response = await axios({
-        method: "GET",
-        url: `http://${server_url}:8080/pets/${petId}`,
-        withCredentials: true,
-      });
+  const getUsersPetInfo = async (petId: number): Promise<PetInfoData | null> => {
+    const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
 
-      console.log("서버 응답:", response);
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 로딩 지연 시뮬레이션
 
-      setPetData(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error("반려동물 정보 요청 중 오류 발생:", error);
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getUsersPetInfo();
-  }, [isEditing]);
-
-  // 수정 버튼 클릭 시
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  const handleDelete = async () => {
-    if (
-      confirm(
-        "동물 정보를 삭제하시면 별자리가 사라질 거에요. 정말 삭제하시겠어요?"
-      )
-    ) {
-      try {
-        await axios.delete(`http://${server_url}:8080/pets/${petId}`, {
-          withCredentials: true,
-        });
-
-        alert("반려동물이 삭제되었어요.");
-        router.push(`/mypage/myInfo`);
-      } catch (error) {
-        console.error("동물 정보 삭제 중 오류 발생:", error);
-      }
+    if (petId === 123) {
+      return mockPetData;
     } else {
-      console.log("동물 정보 삭제 취소");
+      return null; // 정보 없음 시뮬레이션
     }
+
+    // try {
+    //     const response = await axios({
+    //         method: "GET",
+    //         url: `http://${server_url}:8080/pets/${petId}`,
+    //         withCredentials: true,
+    //     });
+    //     return response.data;
+    // } catch (error) {
+    //     console.error("반려동물 정보 요청 중 오류 발생:", error);
+    //     throw error;
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <>
         <Header />
@@ -106,12 +106,12 @@ export default function Page() {
     );
   }
 
-  if (!petData) {
+  if (isError || !petData) {
     return (
       <>
         <Header />
         <Body>
-          <p>반려동물 정보가 존재하지 않습니다.</p>
+          <p>{isError ? `데이터를 불러오지 못했습니다: ${error?.message}` : "반려동물 정보가 존재하지 않습니다."}</p>
         </Body>
       </>
     );
@@ -119,63 +119,21 @@ export default function Page() {
 
   return (
     <>
-      <Header />
       <Body>
-        {isEditing ? (
-          <Title>동물 정보 수정하기</Title>
-        ) : (
-          <Title>동물 정보</Title>
-        )}
         {petData ? (
-          <Container>
-            <div style={{ display: "flex", gap: "90px" }}>
-              <ImageContainer>
-                <Image
-                  src={petData.pet_img}
-                  alt="pet image"
-                  width={512}
-                  height={512}
-                />
-              </ImageContainer>
-              {isEditing ? (
-                <EditingAnimalInfo
-                  isEditing={isEditing}
-                  setIsEditing={setIsEditing}
-                  pet_id={petData.pet_id}
-                  pet_name={petData.pet_name}
-                  species={petData.species}
-                  gender={petData.gender}
-                  birth_date={petData.birth_date}
-                  death_date={petData.death_date}
-                  personality={petData.personality}
-                  nickname={petData.nickname}
-                />
-              ) : (
-                <>
-                  <FormContainer>
-                    <Label>이름</Label>
-                    <Label>{petData.pet_name}</Label>
-                    <Label>종</Label>
-                    <Label>{petData.species}</Label>
-                    <Label>호칭</Label>
-                    <Label>{petData.nickname}</Label>
-                    <Label>성별</Label>
-                    <Label>{GenderMap[petData.gender]}</Label>
-                    <Label>태어난 날</Label>
-                    <Label>{petData.birth_date}</Label>
-                    <Label>별이 된 날</Label>
-                    <Label>{petData.death_date}</Label>
-                    <Label>성격</Label>
-                    <Label>{PersonalityMap[petData.personality]}</Label>
-                  </FormContainer>
-                  <Button onClick={handleEdit}>수정</Button>
-                  <Button style={{ right: "32px" }} onClick={handleDelete}>
-                    삭제
-                  </Button>
-                </>
-              )}
-            </div>
-          </Container>
+          <PetCard
+            petId={petData.pet_id}
+            name={petData.pet_name}
+            startDate={petData.birth_date}
+            endDate={petData.death_date}
+            animalType={petData.animal_type}
+            breed={petData.species}
+            count={0}
+            description={petData.context}
+            gender={petData.gender ? GenderMap[petData.gender] : ""}
+            personality={petData.personality ? PersonalityMap[petData.personality] : ""}
+            imageUrl={petData.pet_img}
+          />
         ) : (
           <p>해당 반려동물을 찾을 수 없습니다.</p>
         )}
@@ -183,72 +141,3 @@ export default function Page() {
     </>
   );
 }
-
-const Body = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - 90px);
-  flex-direction: column;
-  color: #fff;
-  gap: 20px;
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 1100px;
-  height: 600px;
-  padding: 30px;
-  color: white;
-  position: relative;
-  align-items: center;
-  background: linear-gradient(to bottom, #d9d9d91a 0%, #7373731a 100%);
-  border-radius: 10px;
-  justify-content: center;
-`;
-
-const ImageContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 512px;
-  height: 512px;
-  background-color: #ece6f0;
-  position: relative;
-`;
-
-const FormContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 12px;
-  align-items: center;
-  padding: 20px;
-  border-radius: 8px;
-  width: 100%;
-  max-width: 495px;
-`;
-
-const Label = styled.label`
-  color: white;
-  font-size: 14px;
-`;
-
-const Title = styled.span`
-  font-weight: 900;
-  font-size: 35px;
-`;
-
-const Button = styled.button`
-  width: 100px;
-  height: 40px;
-  border: none;
-  border-radius: 5px;
-  background: rgba(170, 200, 255, 0.15);
-  color: #adc3f3;
-  cursor: pointer;
-  position: absolute;
-  bottom: 25px;
-  right: 144px;
-`;
