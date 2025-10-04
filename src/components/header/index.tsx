@@ -27,6 +27,7 @@ const Header = ({ title }: HeaderProps) => {
 export default Header;
 
 const Container = styled.div`
+  background-color: #1F2027;
   position: relative;
   display: flex;
   align-items: center;
