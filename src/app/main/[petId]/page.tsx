@@ -3,39 +3,238 @@
 import axios from "axios";
 import { useParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Header from "../../../components/header";
-import styled from "styled-components";
 import BottomMessage from "../../../components/addStarMessage";
 import AddStarModal from "../../../components/addStarModal";
-import ConstellationCanvas, {
-  PetData,
-  Star,
-} from "../../../components/constellationCanvas";
+import ConstellationCanvas, { PetData, Star } from "../../../components/constellationCanvas";
 import StarPage from "../../../components/starModal";
 import Image from "next/image";
-import chatbot_logo_white from "/public/chatbot_logo_white.svg";
-import chatbot_logo_colored from "/public/chatbot_logo_colored.svg";
-import ChatbotModalAlive from "../../../components/chatbot/chatbotAlive";
-import ChatbotModalNotAlive from "../../../components/chatbot/chatbotNotAlive";
+import { Body } from "./styles";
 
 export default function Page() {
   const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
   const params = useParams();
   const petId = Number(params.petId);
 
-  const [petData, setPetData] = useState<PetData | null>(null);
-  const [petAlive, setPetAlive] = useState<boolean>(false);
-  const [loading, setLoading] = useState(true);
-
   const [selectedStarId, setSelectedStarId] = useState<number | null>(null);
-  const [selectedMemoryId, setSelectedMemoryId] = useState<number>(0); // 임의 지정
-  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
-  const [isChatbotTabHovered, setIsChatbotTabHovered] = useState(false);
+  const [selectedMemoryId, setSelectedMemoryId] = useState<number | null>(0); // 임의 지정
 
   const [isAddStarModalOpen, setIsAddStarModalOpen] = useState(false);
   const [isStarInfoModalOpen, setIsStarInfoModalOpen] = useState(false);
   const [messageVisible, setMessageVisible] = useState(false);
   const messageRef = useRef<HTMLDivElement>(null);
+
+  const mockPetData: PetData = {
+    "petId": 102,
+    "petName": "petName",
+    "starList": [
+      {
+        "star_id": 16,
+        "index_id": 0,
+        "x_star": 72,
+        "y_star": 276,
+        "written": true,
+        "memory_id": null
+      },
+      {
+        "star_id": 17,
+        "index_id": 1,
+        "x_star": 73,
+        "y_star": 203,
+        "written": true,
+        "memory_id": null
+      },
+      {
+        "star_id": 18,
+        "index_id": 2,
+        "x_star": 256,
+        "y_star": 148,
+        "written": true,
+        "memory_id": null
+      },
+      {
+        "star_id": 19,
+        "index_id": 3,
+        "x_star": 371,
+        "y_star": 166,
+        "written": true,
+        "memory_id": null
+      },
+      {
+        "star_id": 20,
+        "index_id": 4,
+        "x_star": 287,
+        "y_star": 385,
+        "written": true,
+        "memory_id": null
+      },
+      {
+        "star_id": 21,
+        "index_id": 5,
+        "x_star": 196,
+        "y_star": 157,
+        "written": true,
+        "memory_id": null
+      },
+      {
+        "star_id": 22,
+        "index_id": 6,
+        "x_star": 157,
+        "y_star": 219,
+        "written": true,
+        "memory_id": null
+      },
+      {
+        "star_id": 23,
+        "index_id": 7,
+        "x_star": 180,
+        "y_star": 272,
+        "written": true,
+        "memory_id": 12
+      },
+      {
+        "star_id": 24,
+        "index_id": 8,
+        "x_star": 252,
+        "y_star": 294,
+        "written": false,
+        "memory_id": null
+      },
+      {
+        "star_id": 25,
+        "index_id": 9,
+        "x_star": 261,
+        "y_star": 251,
+        "written": false,
+        "memory_id": null
+      },
+      {
+        "star_id": 26,
+        "index_id": 10,
+        "x_star": 284,
+        "y_star": 220,
+        "written": false,
+        "memory_id": null
+      },
+      {
+        "star_id": 27,
+        "index_id": 11,
+        "x_star": 295,
+        "y_star": 170,
+        "written": false,
+        "memory_id": null
+      },
+      {
+        "star_id": 28,
+        "index_id": 12,
+        "x_star": 388,
+        "y_star": 233,
+        "written": false,
+        "memory_id": null
+      },
+      {
+        "star_id": 29,
+        "index_id": 13,
+        "x_star": 308,
+        "y_star": 303,
+        "written": false,
+        "memory_id": null
+      },
+      {
+        "star_id": 30,
+        "index_id": 14,
+        "x_star": 363,
+        "y_star": 342,
+        "written": false,
+        "memory_id": null
+      }
+    ],
+    "svgPath": "https://starlightbucket.s3.ap-northeast-2.amazonaws.com/constellationSvg/DOG_1.svg",
+    "edges": [
+      {
+        "startPoint": 0,
+        "endPoint": 1
+      },
+      {
+        "startPoint": 4,
+        "endPoint": 13
+      },
+      {
+        "startPoint": 5,
+        "endPoint": 2
+      },
+      {
+        "startPoint": 6,
+        "endPoint": 5
+      },
+      {
+        "startPoint": 6,
+        "endPoint": 1
+      },
+      {
+        "startPoint": 7,
+        "endPoint": 6
+      },
+      {
+        "startPoint": 8,
+        "endPoint": 9
+      },
+      {
+        "startPoint": 9,
+        "endPoint": 10
+      },
+      {
+        "startPoint": 11,
+        "endPoint": 2
+      },
+      {
+        "startPoint": 11,
+        "endPoint": 10
+      },
+      {
+        "startPoint": 11,
+        "endPoint": 3
+      },
+      {
+        "startPoint": 12,
+        "endPoint": 3
+      },
+      {
+        "startPoint": 13,
+        "endPoint": 8
+      },
+      {
+        "startPoint": 13,
+        "endPoint": 14
+      }
+    ]
+  }
+
+  // 별자리 정보 fetch 함수 (mock)
+  const fetchPetStarInfo = async (): Promise<PetData> => {
+    await new Promise((resolve) => setTimeout(resolve, 800)); // 0.8초 지연
+    return mockPetData;
+  };
+
+  // // 별자리 정보 fetch 함수
+  // const fetchPetStarInfo = async (): Promise<PetData> => {
+  //   const response = await axios.get(`http://${server_url}:8080/pets/${petId}/stars`, {
+  //     withCredentials: true,
+  //     headers: { "Content-Type": "application/json;charset=utf-8" },
+  //   });
+  //   return response.data;
+  // };
+
+  const {
+    data: petData,
+    isLoading: isPetLoading,
+    isError: isPetError,
+  } = useQuery<PetData>({
+    queryKey: ["petStarInfo", petId],
+    queryFn: fetchPetStarInfo,
+    enabled: !!petId,
+  });
 
   const openAddStarModal = () => {
     setIsAddStarModalOpen(true);
@@ -96,81 +295,24 @@ export default function Page() {
     }
   };
 
-  useEffect(() => {
-    const getPetStarInfo = async () => {
-      try {
-        const response = await axios({
-          method: "GET",
-          url: `http://${server_url}:8080/pets/${petId}/stars`,
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-          },
-        });
-
-        console.log("서버 응답:", response);
-        setPetData(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("반려동물의 별자리 요청 중 오류 발생:", error);
-        setLoading(false);
-      }
-    };
-    const getPetAliveOrNot = async () => {
-      try {
-        const response = await axios({
-          method: "GET",
-          url: `http://${server_url}:8080/pets/${petId}/live`,
-          withCredentials: true,
-        });
-        console.log("사망 여부:", response);
-        setPetAlive(response.data.live);
-      } catch (error) {
-        console.error("반려동물의 사망 여부 조회 중 오류 발생:", error);
-      }
-    };
-    getPetStarInfo();
-    getPetAliveOrNot();
-  }, [petId, isAddStarModalOpen, isStarInfoModalOpen, server_url]);
-
-  if (loading) return <p>로딩 중...</p>;
-  if (!petData) return <p>데이터를 불러올 수 없습니다.</p>;
+  if (isPetLoading) return <p>로딩 중...</p>;
+  if (isPetError || !petData) return <p>데이터를 불러올 수 없습니다.</p>;
 
   return (
     <>
-      <Header />
+      <Header title={`${petData.petName}자리`} />
       <Body>
         <ConstellationCanvas
           petData={petData}
           selectedStarId={selectedStarId}
           onStarClick={handleStarClick}
         />
-        <ConstellationName>{petData.petName}자리</ConstellationName>
-        <ChatbotTab
-          onClick={() => setIsChatbotOpen(true)}
-          onMouseEnter={() => setIsChatbotTabHovered(true)}
-          onMouseLeave={() => setIsChatbotTabHovered(false)}
-        >
-          <Image
-            src={
-              isChatbotTabHovered ? chatbot_logo_colored : chatbot_logo_white
-            }
-            alt="chatbot"
-          />
-          AI 별빛 *
-        </ChatbotTab>
         <BottomMessage
           ref={messageRef}
           show={messageVisible}
           onAddClick={() => handleAddStar(selectedStarId)}
         />
       </Body>
-      {isChatbotOpen &&
-        (petAlive ? (
-          <ChatbotModalAlive onClose={() => setIsChatbotOpen(false)} />
-        ) : (
-          <ChatbotModalNotAlive onClose={() => setIsChatbotOpen(false)} />
-        ))}
 
       {isAddStarModalOpen && (
         <AddStarModal starId={selectedStarId} onClose={closeAddStarModal} />
@@ -178,46 +320,10 @@ export default function Page() {
       {isStarInfoModalOpen && (
         <StarPage
           // starId={selectedStarId}
-          memoryId={selectedMemoryId}
+          memoryId={selectedMemoryId ?? 0}
           onClose={closeStarInfoModal}
         />
       )}
     </>
   );
 }
-
-const Body = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  height: calc(100vh - 90px);
-  color: #fff;
-  position: relative;
-`;
-
-const ConstellationName = styled.div`
-  font-size: 35px;
-  position: absolute;
-  bottom: 20px;
-  font-weight: bold;
-`;
-
-const ChatbotTab = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  position: absolute;
-  bottom: 6px;
-  left: 15px;
-  font-size: 25px;
-  color: #fff;
-  cursor: pointer;
-  background: rgba(173, 195, 243, 0.55);
-  padding: 10px 20px;
-  border-radius: 10px;
-
-  &:hover {
-    color: #adc3f3;
-  }
-`;

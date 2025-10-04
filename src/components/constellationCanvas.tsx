@@ -9,7 +9,7 @@ export interface Star {
   x_star: number;
   y_star: number;
   written: boolean;
-  memory_id: number;
+  memory_id: number | null;
 }
 
 export interface Edge {
