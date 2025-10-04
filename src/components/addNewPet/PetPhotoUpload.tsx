@@ -3,13 +3,13 @@ import styled from "styled-components";
 import { usePetStore } from "../../store/petStore";
 import Image from "next/image";
 import add from "/public/add.svg";
-import { Container as BaseContainer, Title as BaseTitle, Description as BaseDescription, Button, Header } from "./styles";
+import { Container as BaseContainer, Header as BaseHeader, Description, Button, Title } from "./styles";
 
 export const Container = styled(BaseContainer)`
   align-items: center;
 `;
 
-export const Title = styled(BaseTitle)`
+export const Header = styled(BaseHeader)`
   align-self: flex-start;
 `;
 
@@ -36,10 +36,6 @@ const DefaultPreview = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-export const Description = styled(BaseDescription)`
-  align-self: flex-start;
 `;
 
 const AddButton = styled.button`

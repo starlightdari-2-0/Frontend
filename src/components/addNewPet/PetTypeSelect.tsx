@@ -2,8 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { usePetStore } from "../../store/petStore";
 import Image from "next/image";
-import { Container, Title, Description } from "./PetPhotoUpload";
-import { Header } from "./styles";
+import { Container } from "./PetPhotoUpload";
+import { Header as BaseHeader, Title, Description } from "./styles";
+
+export const Header = styled(BaseHeader)`
+  align-self: flex-start;
+`;
 
 const List = styled.div`
   display: flex;

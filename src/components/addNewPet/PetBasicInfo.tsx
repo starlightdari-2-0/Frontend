@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import { usePetStore } from "../../store/petStore";
 import { Container, Description, Title, Label, Input, Button, Header, Item } from "./styles";
 import RequiredMark from "./RequiredMark";
