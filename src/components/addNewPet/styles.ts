@@ -1,16 +1,5 @@
 import styled from "styled-components";
 
-export const Body = styled.div`
-  display: flex;
-  padding: 50px;
-  color: #fff;
-  position: relative;
-  align-items: center;
-  gap: 35px;
-  background: linear-gradient(to bottom, #d9d9d91a 0%, #7373731a 100%);
-  border-radius: 10px;
-`;
-
 export const Container = styled.div`
   width: 328px;
   min-height: 100vh;

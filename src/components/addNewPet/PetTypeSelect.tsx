@@ -4,6 +4,7 @@ import { usePetStore } from "../../store/petStore";
 import Image from "next/image";
 import { Container } from "./PetPhotoUpload";
 import { Header as BaseHeader, Title, Description } from "./styles";
+import axios from "axios";
 
 export const Header = styled(BaseHeader)`
   align-self: flex-start;
@@ -54,10 +55,34 @@ const typeIconMap: Record<string, string> = {
     "소동물": "/animal/hamster.svg",
     "그 외": "/animal/default.svg",
 };
-const types = ["강아지", "고양이", "어류", "조류", "파충류", "소동물", "그 외"];
+
+const typeMap: Record<string, number> = {
+    "강아지": 1,
+    "고양이": 2,
+    "어류": 3,
+    "조류": 4,
+    "파충류": 5,
+    "소동물": 6,
+    "그 외": 7,
+};
+const types = Object.keys(typeMap);
 
 const PetTypeSelect = () => {
-    const { step, type, setType, setStep } = usePetStore();
+    const { step, type, setType, setStep, setConstellations } = usePetStore();
+
+    const handleNext = async () => {
+        if (!type) return;
+        try {
+            // const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
+            // const response = await axios.get(`http://${server_url}:8080/constellation/${type}`, {
+            //     withCredentials: true,
+            // });
+            // setConstellations(response.data);
+            setStep(step + 1);
+        } catch (error) {
+            console.error("동물 타입별 별자리 데이터 가져오기 실패:", error);
+        }
+    };
 
     return (
         <Container>
@@ -70,8 +95,8 @@ const PetTypeSelect = () => {
                 {types.map((t) => (
                     <Option
                         key={t}
-                        selected={type === t}
-                        onClick={() => setType(t)}
+                        selected={type === typeMap[t]}
+                        onClick={() => setType(typeMap[t])}
                     ><Image
                             src={typeIconMap[t]}
                             alt={t}
@@ -82,7 +107,7 @@ const PetTypeSelect = () => {
                     </Option>
                 ))}
             </List>
-            <Button onClick={() => setStep(step + 1)} disabled={!type}>다음</Button>
+            <Button onClick={handleNext} disabled={!type}>다음</Button>
         </Container>
     );
 };
