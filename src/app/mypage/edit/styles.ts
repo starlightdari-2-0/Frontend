@@ -6,12 +6,11 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 360px;
-  height: calc(100vh - 40px);
+  min-height: 100vh;
   min-width: 360px;
   max-width: 767px;
   opacity: 1;
   padding-right: 16px;
-  padding-bottom: 40px;
   padding-left: 16px;
   background-color: #1F2027;
   align-items: center;
