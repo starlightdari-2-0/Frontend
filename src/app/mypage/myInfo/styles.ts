@@ -11,9 +11,9 @@ export const Container = styled.div`
   max-width: 767px;
   opacity: 1;
   padding-right: 16px;
-  padding-bottom: 60px;
   padding-left: 16px;
   background-color: #1F2027;
+  position: relative;
 `;
 
 export const Section = styled.div`
