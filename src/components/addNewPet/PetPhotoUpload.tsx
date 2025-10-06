@@ -45,6 +45,7 @@ const AddButton = styled.button`
   border: none;
   background: none;
   z-index: 2;
+  cursor: pointer;
 `;
 
 const PetPhotoUpload = () => {

@@ -10,7 +10,6 @@ const PetBasicInfo = () => {
     const isFilled = !!name && !!birth && !!meet;
     const maxLength = 20;
 
-
     return (
         <Container>
             <Header>
