@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import animal from "/public/animal.svg";
+import animal from "/public/animal/dog.svg";
 import starCount from "/public/starCount.svg";
 import more from "/public/title_more.svg";
 import birthday_icon from "/public/birthday_icon.svg";

@@ -42,7 +42,7 @@ const PersonalityMap: Record<string, string> = {
 
 const mockPetData: PetInfoData = {
   pet_id: 123,
-  pet_img: "/maru.png",
+  pet_img: "/maru.svg",
   pet_name: "루비",
   animal_type: "강아지",
   species: "치와와",
@@ -98,7 +98,6 @@ export default function Page() {
   if (isLoading) {
     return (
       <>
-        <Header />
         <Body>
           <p>반려동물 정보를 받아오고 있어요...</p>
         </Body>
@@ -109,7 +108,6 @@ export default function Page() {
   if (isError || !petData) {
     return (
       <>
-        <Header />
         <Body>
           <p>{isError ? `데이터를 불러오지 못했습니다: ${error?.message}` : "반려동물 정보가 존재하지 않습니다."}</p>
         </Body>
