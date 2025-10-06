@@ -61,6 +61,10 @@ export const Label = styled.div`
 `;
 
 export const CharCount = styled.span`
+  font-family: Pretendard;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
 `;
 
 export const InputWrapper = styled.div`
