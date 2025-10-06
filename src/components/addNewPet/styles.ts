@@ -52,12 +52,31 @@ export const Input = styled.input`
   color: #7D8799;
 `;
 
+export const CharCount = styled.span`
+  font-family: Pretendard;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+`;
+
+export const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+`;
+
 export const Label = styled.label`
   color: #A5B4C5;
   font-family: Pretendard;
   font-weight: 600;
   font-size: 14px;
   line-height: 150%;
+`;
+
+export const LabelWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const Description = styled.p`
@@ -81,6 +100,17 @@ export const Button = styled.button<{ disabled: boolean }>`
     disabled ? "#3C424B" : "#AFCBFB"};
   color: ${({ disabled }) => (disabled ? "#7D8799" : "#1F2027")};
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+`;
+
+export const ClearButton = styled.button`
+  position: absolute;
+  right: 10px;
+  border: none;
+  background: transparent;
+  color: #bbb;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
 `;
 
 // export const GenderOptions = styled.div`
