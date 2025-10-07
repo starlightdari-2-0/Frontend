@@ -9,7 +9,7 @@ export default function MyActivityLayout({ children }: { children: React.ReactNo
 
   return (
     <Container>
-      <Header title="나의 활동" />
+      <Header title="나의 활동" backUrl="/mypage/myInfo" />
       <TabMenu />
       <div>{children}</div>
     </Container >

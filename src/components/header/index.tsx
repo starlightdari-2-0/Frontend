@@ -5,19 +5,29 @@ import back from "/public/goBack.svg";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
 
+// 헤더 제목, 뒤로가기 버튼 클릭 시 이동할 주소를 외부에서 받음
 interface HeaderProps {
-  title?: string; // 헤더 제목을 외부에서 받음
+  title?: string;
+  backUrl?: string;
 }
 
-const Header = ({ title }: HeaderProps) => {
+const Header = ({ title, backUrl }: HeaderProps) => {
   const router = useRouter();
+
+  const handleBack = () => {
+    if (backUrl) {
+      router.push(backUrl);
+    } else {
+      router.back();
+    }
+  };
 
   return (
     <Container>
       <BackButton
         src={back}
         alt="go back"
-        onClick={() => router.back()}
+        onClick={handleBack}
       />
       {title && <Title>{title}</Title>}
     </Container>
@@ -31,7 +41,7 @@ const Container = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  width: 328px;
+  width: 360px;
   height: 60px;
 `;
 
