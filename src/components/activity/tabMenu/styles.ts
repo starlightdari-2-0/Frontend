@@ -11,7 +11,7 @@ export const Tab = styled.div<{ $active: boolean }>`
   align-items: center;
   flex: 1;
   padding: 0.5rem;
-  border-bottom: ${({ $active }) => ($active ? "2px solid #4a90e2" : "none")};
+  border-bottom: ${({ $active }) => ($active ? "2px solid #AFCBFB" : "none")};
   cursor: pointer;
 
   a {
@@ -19,11 +19,8 @@ export const Tab = styled.div<{ $active: boolean }>`
     text-decoration: none;
     font-family: Pretendard;
     font-weight: 600;
-    font-style: SemiBold;
     font-size: 16px;
-    leading-trim: NONE;
     line-height: 150%;
-    letter-spacing: 0%;
     text-align: center;
   }
 `;

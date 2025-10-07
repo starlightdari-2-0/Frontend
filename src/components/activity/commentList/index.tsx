@@ -3,6 +3,8 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Content, List, ListItem, Meta, SubMeta } from "./styles";
+import Image from "next/image";
+import comment from "/public/myComment.svg";
 
 const dummyComments = [
   { id: 1, content: "댓글 내용", date: "2025.08.25", author: "사자자리", comments: 3 },
@@ -18,7 +20,7 @@ const CommentList = () => {
         <ListItem key={item.id} onClick={() => router.push(``)}>
           <Content>{item.content}</Content>
           <Meta>{item.author} · {item.date}</Meta>
-          <SubMeta>💬 {item.comments}</SubMeta>
+          <SubMeta><Image src={comment} alt="" width={20} height={20} /> {item.comments}</SubMeta>
         </ListItem>
       ))}
     </List>

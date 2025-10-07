@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Image from "next/image";
 
 export const List = styled.div`
   display: flex;
@@ -11,6 +12,9 @@ export const ListItem = styled.div`
   height: 70px;
   padding: 16px 0;
   opacity: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   &:hover {
     background: #111;
@@ -41,4 +45,19 @@ export const SubMeta = styled.div`
   line-height: 150%;
   color: #7D8799;
   margin-top: 0.5rem;
+  display: flex;
+  gap: 12px;
+`;
+
+export const Like = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
+export const ContentImage = styled(Image)`
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
 `;

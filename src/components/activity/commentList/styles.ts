@@ -41,4 +41,7 @@ export const SubMeta = styled.div`
   line-height: 150%;
   color: #7D8799;
   margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 `;
