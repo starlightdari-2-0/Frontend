@@ -33,6 +33,7 @@ interface PetState {
     setType: (type: number) => void;
     setConstellations: (data: ConstellationData[]) => void;
     reset: () => void;
+    setAll: (data: Partial<PetState>) => void;
 }
 
 // 확인용 mock data
@@ -78,4 +79,5 @@ export const usePetStore = create<PetState>((set) => ({
             photo: null,
             type: 0,
         }),
+    setAll: (data) => set(data),
 }));
