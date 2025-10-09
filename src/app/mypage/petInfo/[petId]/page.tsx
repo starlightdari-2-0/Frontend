@@ -42,7 +42,7 @@ const PersonalityMap: Record<string, string> = {
 
 const mockPetData: PetInfoData = {
   pet_id: 123,
-  pet_img: "/maru.png",
+  pet_img: "/maru.svg",
   pet_name: "루비",
   animal_type: "강아지",
   species: "치와와",
@@ -75,30 +75,30 @@ export default function Page() {
   const getUsersPetInfo = async (petId: number): Promise<PetInfoData | null> => {
     const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
 
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 로딩 지연 시뮬레이션
+    // await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 로딩 지연 시뮬레이션
 
-    if (petId === 123) {
-      return mockPetData;
-    } else {
-      return null; // 정보 없음 시뮬레이션
-    }
+    // if (petId === 123) {
+    //   return mockPetData;
+    // } else {
+    //   return null; // 정보 없음 시뮬레이션
+    // }
 
-    // try {
-    //     const response = await axios({
-    //         method: "GET",
-    //         url: `http://${server_url}:8080/pets/${petId}`,
-    //         withCredentials: true,
-    //     });
-    //     return response.data;
-    // } catch (error) {
-    //     console.error("반려동물 정보 요청 중 오류 발생:", error);
-    //     throw error;
+    try {
+      const response = await axios({
+        method: "GET",
+        url: `http://${server_url}:8080/pets/${petId}`,
+        withCredentials: true,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("반려동물 정보 요청 중 오류 발생:", error);
+      throw error;
+    };
   };
 
   if (isLoading) {
     return (
       <>
-        <Header />
         <Body>
           <p>반려동물 정보를 받아오고 있어요...</p>
         </Body>
@@ -109,7 +109,6 @@ export default function Page() {
   if (isError || !petData) {
     return (
       <>
-        <Header />
         <Body>
           <p>{isError ? `데이터를 불러오지 못했습니다: ${error?.message}` : "반려동물 정보가 존재하지 않습니다."}</p>
         </Body>

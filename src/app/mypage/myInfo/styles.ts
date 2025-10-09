@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   margin: 0 auto;
-  color: white;
+  color: #A5B4C5;
   display: flex;
   flex-direction: column;
   width: 360px;
@@ -11,9 +11,9 @@ export const Container = styled.div`
   max-width: 767px;
   opacity: 1;
   padding-right: 16px;
-  padding-bottom: 60px;
   padding-left: 16px;
   background-color: #1F2027;
+  position: relative;
 `;
 
 export const Section = styled.div`

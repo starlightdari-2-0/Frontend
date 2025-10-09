@@ -18,13 +18,13 @@ export default function Page() {
       id: 1,
       name: "후추 자리",
       count: 5,
-      imageUrl: "https://place-puppy.com/80x80",
+      imageUrl: "/maru.svg",
     },
     {
       id: 2,
       name: "초코 자리",
       count: 3,
-      imageUrl: "https://placekitten.com/80/80",
+      imageUrl: "/maru.svg",
     },
   ];
 
