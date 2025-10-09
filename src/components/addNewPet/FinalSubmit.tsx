@@ -17,7 +17,7 @@ const FinalSubmit = () => {
         {
           // 성별, 선택한 별자리 추가 필요
           // constellation_id: selectedConstellationId,
-          // gender: gender,
+          gender: "FEMALE",  // 배포 후 테스트를 위해 임시로 넣음
           pet_img: photo,
           animal_type_id: type,
           species: breed,
