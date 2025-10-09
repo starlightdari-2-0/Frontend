@@ -4,8 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled, { css, keyframes } from "styled-components";
 
 export interface Star {
-  star_id: number;
-  index_id: number;
+  node_id: number;
   x_star: number;
   y_star: number;
   written: boolean;
@@ -20,8 +19,8 @@ export interface Edge {
 export interface PetData {
   petId: number;
   petName: string;
-  svgPath: string;
-  starList: Star[];
+  thumbnail_img: string;
+  nodes: Star[];
   edges: Edge[];
 }
 
@@ -33,7 +32,7 @@ const ConstellationCanvas: React.FC<{
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const handleStarClick = (star: Star) => {
-    console.log(`아이디 ${star.star_id} 별이 클릭됐습니다.`);
+    console.log(`아이디 ${star.node_id} 별이 클릭됐습니다.`);
 
     // 클릭된 별에 대해 반짝이는 효과 적용
     onStarClick(star);
@@ -47,7 +46,7 @@ const ConstellationCanvas: React.FC<{
     if (!ctx) return;
 
     const image = new Image();
-    image.src = petData.svgPath;
+    image.src = petData.thumbnail_img;
 
     image.onload = () => {
       const CANVAS_SIZE = 900;
@@ -66,11 +65,11 @@ const ConstellationCanvas: React.FC<{
 
         // 간선 그리기
         petData.edges.forEach((edge: Edge) => {
-          const startStar = petData.starList.find(
-            (star) => star.index_id === edge.startPoint
+          const startStar = petData.nodes.find(
+            (star) => star.node_id === edge.startPoint
           );
-          const endStar = petData.starList.find(
-            (star) => star.index_id === edge.endPoint
+          const endStar = petData.nodes.find(
+            (star) => star.node_id === edge.endPoint
           );
 
           if (startStar && endStar) {
@@ -95,12 +94,12 @@ const ConstellationCanvas: React.FC<{
       <Container>
         <Canvas ref={canvasRef} />
         <StarsContainer>
-          {petData.starList.map((star: Star) => (
+          {petData.nodes.map((star: Star) => (
             <StarDiv
-              key={star.star_id}
+              key={star.node_id}
               x={star.x_star * (900 / 512) - 5} // x 좌표
               y={star.y_star * (900 / 512) - 4.5} // y 좌표
-              selected={selectedStarId === star.star_id}
+              selected={selectedStarId === star.node_id}
               written={star.written}
               onClick={() => handleStarClick(star)}
             />
