@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
 
-const ProfileEdit = ({ getUserInfo }: { getUserInfo: () => Promise<void> }) => {
+const ProfileEdit = () => {
     const router = useRouter();
     const [nickname, setNickname] = useState("");
     const [isEditingNickname, setIsEditingNickname] = useState(true);
@@ -34,7 +34,6 @@ const ProfileEdit = ({ getUserInfo }: { getUserInfo: () => Promise<void> }) => {
             console.error("유저 닉네임 수정 중 오류 발생:", error);
         }
         setIsEditingNickname(false);
-        await getUserInfo();
     };
 
     return (
