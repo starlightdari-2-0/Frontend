@@ -73,11 +73,11 @@ const PetTypeSelect = () => {
     const handleNext = async () => {
         if (!type) return;
         try {
-            // const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
-            // const response = await axios.get(`http://${server_url}:8080/constellation/${type}`, {
-            //     withCredentials: true,
-            // });
-            // setConstellations(response.data);
+            const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
+            const response = await axios.get(`http://${server_url}:8080/constellation/${type}`, {
+                withCredentials: true,
+            });
+            setConstellations(response.data);
             setStep(step + 1);
         } catch (error) {
             console.error("동물 타입별 별자리 데이터 가져오기 실패:", error);

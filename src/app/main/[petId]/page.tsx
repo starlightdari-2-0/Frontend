@@ -11,6 +11,7 @@ import ConstellationCanvas, { PetData, Star } from "../../../components/constell
 import StarPage from "../../../components/starModal";
 import Image from "next/image";
 import { Body } from "./styles";
+import { mockPetDataList } from "../../../mocks/petStar";
 
 export default function Page() {
   const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -25,206 +26,23 @@ export default function Page() {
   const [messageVisible, setMessageVisible] = useState(false);
   const messageRef = useRef<HTMLDivElement>(null);
 
-  const mockPetData: PetData = {
-    "petId": 102,
-    "petName": "petName",
-    "starList": [
-      {
-        "star_id": 16,
-        "index_id": 0,
-        "x_star": 72,
-        "y_star": 276,
-        "written": true,
-        "memory_id": null
-      },
-      {
-        "star_id": 17,
-        "index_id": 1,
-        "x_star": 73,
-        "y_star": 203,
-        "written": true,
-        "memory_id": null
-      },
-      {
-        "star_id": 18,
-        "index_id": 2,
-        "x_star": 256,
-        "y_star": 148,
-        "written": true,
-        "memory_id": null
-      },
-      {
-        "star_id": 19,
-        "index_id": 3,
-        "x_star": 371,
-        "y_star": 166,
-        "written": true,
-        "memory_id": null
-      },
-      {
-        "star_id": 20,
-        "index_id": 4,
-        "x_star": 287,
-        "y_star": 385,
-        "written": true,
-        "memory_id": null
-      },
-      {
-        "star_id": 21,
-        "index_id": 5,
-        "x_star": 196,
-        "y_star": 157,
-        "written": true,
-        "memory_id": null
-      },
-      {
-        "star_id": 22,
-        "index_id": 6,
-        "x_star": 157,
-        "y_star": 219,
-        "written": true,
-        "memory_id": null
-      },
-      {
-        "star_id": 23,
-        "index_id": 7,
-        "x_star": 180,
-        "y_star": 272,
-        "written": true,
-        "memory_id": 12
-      },
-      {
-        "star_id": 24,
-        "index_id": 8,
-        "x_star": 252,
-        "y_star": 294,
-        "written": false,
-        "memory_id": null
-      },
-      {
-        "star_id": 25,
-        "index_id": 9,
-        "x_star": 261,
-        "y_star": 251,
-        "written": false,
-        "memory_id": null
-      },
-      {
-        "star_id": 26,
-        "index_id": 10,
-        "x_star": 284,
-        "y_star": 220,
-        "written": false,
-        "memory_id": null
-      },
-      {
-        "star_id": 27,
-        "index_id": 11,
-        "x_star": 295,
-        "y_star": 170,
-        "written": false,
-        "memory_id": null
-      },
-      {
-        "star_id": 28,
-        "index_id": 12,
-        "x_star": 388,
-        "y_star": 233,
-        "written": false,
-        "memory_id": null
-      },
-      {
-        "star_id": 29,
-        "index_id": 13,
-        "x_star": 308,
-        "y_star": 303,
-        "written": false,
-        "memory_id": null
-      },
-      {
-        "star_id": 30,
-        "index_id": 14,
-        "x_star": 363,
-        "y_star": 342,
-        "written": false,
-        "memory_id": null
-      }
-    ],
-    "svgPath": "https://starlightbucket.s3.ap-northeast-2.amazonaws.com/constellationSvg/DOG_1.svg",
-    "edges": [
-      {
-        "startPoint": 0,
-        "endPoint": 1
-      },
-      {
-        "startPoint": 4,
-        "endPoint": 13
-      },
-      {
-        "startPoint": 5,
-        "endPoint": 2
-      },
-      {
-        "startPoint": 6,
-        "endPoint": 5
-      },
-      {
-        "startPoint": 6,
-        "endPoint": 1
-      },
-      {
-        "startPoint": 7,
-        "endPoint": 6
-      },
-      {
-        "startPoint": 8,
-        "endPoint": 9
-      },
-      {
-        "startPoint": 9,
-        "endPoint": 10
-      },
-      {
-        "startPoint": 11,
-        "endPoint": 2
-      },
-      {
-        "startPoint": 11,
-        "endPoint": 10
-      },
-      {
-        "startPoint": 11,
-        "endPoint": 3
-      },
-      {
-        "startPoint": 12,
-        "endPoint": 3
-      },
-      {
-        "startPoint": 13,
-        "endPoint": 8
-      },
-      {
-        "startPoint": 13,
-        "endPoint": 14
-      }
-    ]
-  }
+  // const pet = mockPetDataList.find(p => p.petId === Number(params.petId))!;
 
-  // 별자리 정보 fetch 함수 (mock)
-  const fetchPetStarInfo = async (): Promise<PetData> => {
-    await new Promise((resolve) => setTimeout(resolve, 800)); // 0.8초 지연
-    return mockPetData;
-  };
 
-  // // 별자리 정보 fetch 함수
+  // // 별자리 정보 fetch 함수 (mock)
   // const fetchPetStarInfo = async (): Promise<PetData> => {
-  //   const response = await axios.get(`http://${server_url}:8080/pets/${petId}/stars`, {
-  //     withCredentials: true,
-  //     headers: { "Content-Type": "application/json;charset=utf-8" },
-  //   });
-  //   return response.data;
+  //   await new Promise((resolve) => setTimeout(resolve, 800)); // 0.8초 지연
+  //   return pet;
   // };
+
+  // 별자리 정보 fetch 함수
+  const fetchPetStarInfo = async (): Promise<PetData> => {
+    const response = await axios.get(`http://${server_url}:8080/pets/${petId}/stars`, {
+      withCredentials: true,
+      headers: { "Content-Type": "application/json;charset=utf-8" },
+    });
+    return response.data;
+  };
 
   const {
     data: petData,
@@ -255,7 +73,7 @@ export default function Page() {
   };
 
   const handleStarClick = (star: Star) => {
-    setSelectedStarId(star.star_id);
+    setSelectedStarId(star.node_id);
     setIsAddStarModalOpen(false);
     setIsStarInfoModalOpen(false);
 

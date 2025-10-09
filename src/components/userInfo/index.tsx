@@ -19,15 +19,15 @@ const mockUserData = {
 // 유저 닉네임, 프로필 사진 받아오기
 const getUserInfo = async (): Promise<UserData> => {
     const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
-    // const response = await axios.get(`http://${server_url}:8080/member`, {
-    //     withCredentials: true,
-    //     headers: { "Content-Type": "application/json;charset=utf-8" },
-    // });
-    // return response.data;
+    const response = await axios.get(`http://${server_url}:8080/member`, {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json;charset=utf-8" },
+    });
+    return response.data;
 
-    // Mock 데이터 반환 (1초 지연)
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    return mockUserData;
+    // // Mock 데이터 반환 (1초 지연)
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    // return mockUserData;
 };
 
 const UserInfo = () => {
