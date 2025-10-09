@@ -17,7 +17,7 @@ const mockUserData = {
 };
 
 // 유저 닉네임, 프로필 사진 받아오기
-const getUserInfo = async (): Promise<UserData> => {
+const getUserInfo = async () => {
     const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
     const response = await axios.get(`http://${server_url}:8080/member`, {
         withCredentials: true,
