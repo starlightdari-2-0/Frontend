@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { usePetStore } from "../../store/petStore";
 import Image from "next/image";
@@ -46,13 +46,29 @@ const AddButton = styled.button`
 const PetPhotoUpload = () => {
   const fileRef = useRef<HTMLInputElement | null>(null);
   const { step, photo, setPhoto, setStep } = usePetStore();
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const url = URL.createObjectURL(e.target.files[0]);
-      setPhoto(url);
+      const selectedFile = e.target.files[0];
+      setPhoto(selectedFile);
+
+      const url = URL.createObjectURL(selectedFile);
+      setPreviewUrl(url);
     }
   };
+
+  useEffect(() => {
+    // photo가 변경되거나 컴포넌트가 언마운트될 때 URL 해제
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
+
+  // 이미지 미리보기
+  const displayUrl = previewUrl || (photo && URL.createObjectURL(photo));
 
   return (
     <Container>
@@ -62,8 +78,8 @@ const PetPhotoUpload = () => {
       </Header>
 
       <PreviewWrapper>
-        {photo ? (
-          <Preview src={photo} alt="preview" width={160} height={160} />
+        {displayUrl ? (
+          <Preview src={displayUrl} alt="preview" width={160} height={160} />
         ) : (
           <DefaultPreview src={defaultImg} alt="default" width={160} height={160} />
         )}

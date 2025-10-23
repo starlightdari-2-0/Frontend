@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { AddButton, Button, ButtonGroup, CharCount, ClearButton, DefaultPreview, Description, Input, InputWrapper, Item, Label, LabelWrapper, OptionButton, Preview, PreviewWrapper, Select, SelectWrapper, Star, StarWrapper } from "./styles";
 import { usePetStore } from "../../store/petStore";
@@ -90,12 +90,26 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
   const isFilled = name && birth && meet && photo && personality;
   const maxLength = 20;
 
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const url = URL.createObjectURL(e.target.files[0]);
-      setPhoto(url);
+      const selectedFile = e.target.files[0];
+      setPhoto(selectedFile);
+
+      const url = URL.createObjectURL(selectedFile);
+      setPreviewUrl(url);
     }
   };
+
+  useEffect(() => {
+    // photo가 변경되거나 컴포넌트가 언마운트될 때 URL 해제
+    return () => {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
 
   const PersonalityMap: Record<string, string> = {
     "활발한": "ACTIVE",
@@ -172,11 +186,14 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
     });
   };
 
+  // 이미지 미리보기
+  const displayUrl = previewUrl || (photo && URL.createObjectURL(photo));
+
   return (
     <>
       <PreviewWrapper>
-        {photo ? (
-          <Preview src={photo} alt="preview" width={100} height={100} />
+        {displayUrl ? (
+          <Preview src={displayUrl} alt="preview" width={100} height={100} />
         ) : (
           <DefaultPreview src={defaultImg} alt="default" width={100} height={100} />
         )}

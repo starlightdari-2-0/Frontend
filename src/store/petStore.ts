@@ -12,7 +12,7 @@ interface PetState {
     gender: string;
     birth: string;
     meet: string;
-    photo: string | null;
+    photo: File | null;
     personality: string;
     breed: string;
     nickname: string;
@@ -26,7 +26,7 @@ interface PetState {
     setGender: (gender: string) => void;
     setBirth: (birth: string) => void;
     setMeet: (meet: string) => void;
-    setPhoto: (photo: string) => void;
+    setPhoto: (file: File | null) => void;
     setPersonality: (value: string) => void;
     setBreed: (value: string) => void;
     setNickname: (value: string) => void;
