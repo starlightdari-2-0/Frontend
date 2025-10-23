@@ -1,8 +1,11 @@
+"use client";
+
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { usePetStore } from "../../store/petStore";
 import Image from "next/image";
 import add from "/public/add.svg";
+import defaultImg from "/public/default_animal.svg";
 import { Container as BaseContainer, Header as BaseHeader, Description, Button, Title } from "./styles";
 
 export const Container = styled(BaseContainer)`
@@ -28,14 +31,11 @@ const Preview = styled(Image)`
   object-fit: cover;
 `;
 
-const DefaultPreview = styled.div`
+const DefaultPreview = styled(Image)`
   width: 160px;
   height: 160px;
   border-radius: 999px;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  object-fit: cover;
 `;
 
 const AddButton = styled.button`
@@ -70,7 +70,7 @@ const PetPhotoUpload = () => {
         {photo ? (
           <Preview src={photo} alt="preview" width={160} height={160} />
         ) : (
-          <DefaultPreview />
+          <DefaultPreview src={defaultImg} alt="default" width={160} height={160} />
         )}
         <AddButton onClick={() => fileRef.current?.click()}><Image src={add} alt="" /></AddButton>
       </PreviewWrapper>
