@@ -8,7 +8,6 @@ import React, {
   useRef,
   useState,
 } from "react";
-import StarImageUpload from "./starImageUpload";
 import axios from "axios";
 import { useParams } from "next/navigation";
 
@@ -192,11 +191,11 @@ const AddStarModal: React.FC<AddStarModalProps> = ({ onClose, starId }) => {
     <>
       <ModalOverlay>
         <ModalContent ref={modalRef} onClick={(e) => e.stopPropagation()}>
-          <StarImageUpload
+          {/* <StarImageUpload
             formData={formData}
             setFormData={setFormData}
             setImage={setImage}
-          />
+          /> */}
           <ModalBody>
             <ItemWrapper>
               <Title>#{starId} 별에 추억 기록하기</Title>
@@ -394,7 +393,7 @@ const Button = styled.button`
   font-family: "Pretendard-Regular", sans-serif;
 `;
 
-const SubmitButton = styled(Button)<{ disabled: boolean }>`
+const SubmitButton = styled(Button) <{ disabled: boolean }>`
   border: ${({ disabled }) => (disabled ? "1px solid #d9d9d98c" : "none")};
   background: ${({ disabled }) => (disabled ? "transparent" : "#ADC3F3")};
   color: ${({ disabled }) => (disabled ? "#d9d9d98c" : "#101829;")};

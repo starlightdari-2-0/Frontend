@@ -10,21 +10,7 @@ import EditingAnimalInfo from "../../../components/editAnimalInfo";
 import EditAnimalInfo from "../../../components/editAnimalInfo";
 import Header from "../../../components/header";
 import { Container } from "./styles";
-
-export interface PetInfoData {
-    pet_id: number;
-    pet_img: string;
-    pet_name: string;
-    animal_type: string;
-    species: string;
-    gender: string;
-    birth_date: string;
-    death_date: string;
-    personality: string;
-    member_id: number;
-    nickname: string;
-    context: string;
-}
+import { PetInfoData } from "../../mypage/petInfo/[petId]/page";
 
 const GenderMap: Record<string, string> = {
     MALE: "남성",
@@ -39,9 +25,10 @@ const mockPetData: PetInfoData = {
     animal_type: "강아지",
     species: "치와와",
     gender: "FEMALE",
-    birth_date: "2018.05.20",
+    birth_date: "2018.03.20",
+    first_date: "2018.05.20",
     death_date: "2024.10.02",
-    personality: "CHARMING",
+    personality: "ACTIVE",
     member_id: 456,
     nickname: "별빛주인",
     context: "너무 귀여운 우리 루비"

@@ -3,8 +3,6 @@
 import "../globals.css";
 import React from "react";
 import Header from "../../components/header";
-// import NewPetInfo from "../../components/addNewPet";
-// import PetCoordinatesInfo from "../../components/petCoordinatesInfo";
 import PetBasicInfo from "../../components/addNewPet/PetBasicInfo";
 import PetPhotoUpload from "../../components/addNewPet/PetPhotoUpload";
 import PetTypeSelect from "../../components/addNewPet/PetTypeSelect";
@@ -14,20 +12,6 @@ import { TransitionWrapper } from "../../components/TransitionWrapper";
 import PetFeature from "../../components/addNewPet/PetFeature";
 import PetExtraInfo from "../../components/addNewPet/PetExtraInfo";
 import { usePetStore } from "../../store/petStore";
-
-export interface PetFormData {
-  pet_img: File | null;
-  pet_name: string;
-  species: string;
-  gender: string;
-  birth_date: string;
-  death_date: string;
-  live: boolean;
-  personality: string;
-  nickname: string;
-  selected_x: number;
-  selected_y: number;
-}
 
 export default function Page() {
   const { step } = usePetStore()
