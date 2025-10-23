@@ -2,12 +2,12 @@
 
 import React, { useEffect, useRef } from "react";
 import axios from "axios";
-import { AddButton, Button, ButtonGroup, CharCount, ClearButton, DefaultPreview, Description, Input, InputWrapper, Item, Label, LabelWrapper, OptionButton, Preview, PreviewWrapper, Star, StarWrapper } from "./styles";
+import { AddButton, Button, ButtonGroup, CharCount, ClearButton, DefaultPreview, Description, Input, InputWrapper, Item, Label, LabelWrapper, OptionButton, Preview, PreviewWrapper, Select, SelectWrapper, Star, StarWrapper } from "./styles";
 import { usePetStore } from "../../store/petStore";
 import Image from "next/image";
 import X from "/public/inputbox_X.svg";
 import add from "/public/add.svg";
-import arrow from "/public/arrow_right.svg";
+import defaultImg from "/public/default_animal.svg";
 import dog from "/public/animal/dog.svg";
 import { useQuery } from "@tanstack/react-query";
 
@@ -27,9 +27,48 @@ const GENDER_OPTIONS = [
   { label: "남성", value: "MALE" },
   { label: "모르겠어요", value: "NONE" },
 ];
+///
+interface PetInfoData {
+  pet_id: number;
+  pet_img: string;
+  pet_name: string;
+  animal_type: string;
+  species: string;
+  gender: string;
+  birth_date: string;
+  fist_date: string;
+  death_date: string;
+  personality: string;
+  member_id: number;
+  nickname: string;
+  context: string;
+}
 
+const mockPetData: PetInfoData = {
+  pet_id: 123,
+  pet_img: "/maru.svg",
+  pet_name: "루비",
+  animal_type: "강아지",
+  species: "치와와",
+  gender: "FEMALE",
+  birth_date: "2018-05-20",
+  fist_date: "2018-05-20",
+  death_date: "2024-10-02",
+  personality: "CHARMING",
+  member_id: 456,
+  nickname: "별빛주인",
+  context: "너무 귀여운 우리 루비"
+};
+///
 const fetchPetInfo = async (petId: number) => {
   const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
+  ///
+  if (petId === 123) {
+    return mockPetData;
+  } else {
+    return null; // 정보 없음 시뮬레이션
+  }
+  ///
   const { data } = await axios.get(`http://${server_url}:8080/pets/${petId}`, {
     // withCredentials: true,
   });
@@ -41,7 +80,7 @@ interface EditAnimalInfoProps {
 }
 
 const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
-  const { name, birth, meet, photo, personality, breed, nickname, death, setAll, setName, setBirth, setMeet, setPhoto, setPersonality, setBreed, setNickname, setDeath } = usePetStore();
+  const { name, birth, gender, meet, photo, personality, breed, nickname, death, setAll, setName, setBirth, setGender, setMeet, setPhoto, setPersonality, setBreed, setNickname, setDeath } = usePetStore();
   const fileRef = useRef<HTMLInputElement | null>(null);
   const isFilled = !!name && !!birth && !!meet && !photo || !personality;
   const maxLength = 20;
@@ -93,9 +132,7 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
     try {
       const response = await axios.patch(`http://${server_url}:8080/pets/${petId}`,
         {
-          // 성별, 선택한 별자리 추가 필요
-          // constellation_id: selectedConstellationId,
-          // gender: gender,
+          gender: gender,
           pet_img: photo,
           species: breed,
           pet_name: name,
@@ -124,7 +161,7 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
         {photo ? (
           <Preview src={photo} alt="preview" width={100} height={100} />
         ) : (
-          <DefaultPreview />
+          <DefaultPreview src={defaultImg} alt="default" width={100} height={100} />
         )}
         <AddButton onClick={() => fileRef.current?.click()}><Image src={add} alt="" width={24} height={24} /></AddButton>
       </PreviewWrapper>
@@ -140,7 +177,7 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
         <Description>반려동물의 별자리는 수정할 수 없어요</Description>
         <StarWrapper>
           <Image src={dog} alt="" />
-          <Star>강아지<Image src={arrow} alt="" />골든리트리버</Star>
+          <Star>강아지</Star>
         </StarWrapper>
       </Item>
       <Item>
@@ -160,12 +197,34 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
         </InputWrapper>
       </Item>
       <Item>
+        <Label>성별</Label>
+        <SelectWrapper>
+          <Select
+            name="성별"
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}>
+            <option value="FEMALE">암컷</option>
+            <option value="MALE">수컷</option>
+            <option value="NONE">모르겠어요</option>
+          </Select>
+        </SelectWrapper>
+      </Item>
+      <Item>
         <Label>태어난 날</Label>
         <Input
           type="date"
           placeholder="태어난 날"
           value={birth}
           onChange={(e) => setBirth(e.target.value)}
+        />
+      </Item>
+      <Item>
+        <Label>처음 만난 날</Label>
+        <Input
+          type="date"
+          placeholder="처음 만난 날"
+          value={meet}
+          onChange={(e) => setMeet(e.target.value)}
         />
       </Item>
       <Item>
@@ -191,15 +250,7 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
           onChange={(e) => setBreed(e.target.value)}
         />
       </Item>
-      <Item>
-        <Label>처음 만난 날</Label>
-        <Input
-          type="date"
-          placeholder="처음 만난 날"
-          value={meet}
-          onChange={(e) => setMeet(e.target.value)}
-        />
-      </Item>
+      {/* 한 줄 기록 추가 필요 */}
       <Item>
         <Label>별나라로 간 날</Label>
         <Input type="date" value={death} onChange={(e) => setDeath(e.target.value)} />

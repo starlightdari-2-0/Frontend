@@ -16,19 +16,11 @@ export const Preview = styled(Image)`
   object-fit: cover;
 `;
 
-export const DefaultPreview = styled.div`
-  width: 100px;
-  height: 100px;
-  border-radius: 999px;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+export const DefaultPreview = styled(Preview)``;
 
 export const AddButton = styled.button`
   position: absolute;
-  right: 132px;
+  right: 117px;
   bottom: 0;
   border: none;
   background: none;
@@ -46,6 +38,7 @@ export const Item = styled.div`
 export const StarWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   width: 296px;
   height: 28px;
@@ -111,12 +104,10 @@ export const Description = styled.p`
 `;
 
 export const Button = styled.button<{ disabled: boolean }>`
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
   width: 328px;
   height: 48px;
+  margin-bottom: 40px;
+  margin-top: 47px;
   border: none;
   border-radius: 10px;
   background: ${({ disabled }) =>
@@ -133,8 +124,8 @@ export const ButtonGroup = styled.div`
 `;
 
 export const OptionButton = styled.button<{ selected: boolean }>`
-  background-color: ${({ selected }) => (selected ? "#2a2f3a" : "#3C424B")};
-  color: ${({ selected }) => (selected ? "#6c63ff" : "#D9E0ED")};
+  background-color: ${({ selected }) => (selected ? "#AFCBFB" : "#3C424B")};
+  color: ${({ selected }) => (selected ? "#1F2027" : "#D9E0ED")};
   padding: 4px 12px;
   border-radius: 8px;
   cursor: pointer;
@@ -150,4 +141,28 @@ export const ClearButton = styled.button`
   font-size: 16px;
   cursor: pointer;
   display: flex;
+`;
+
+export const SelectWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+
+export const Select = styled.select`
+  width: 100%;
+  padding: 10px 16px;
+  height: 48.53px;
+  border: 1px solid #5D636F;
+  border-radius: 10px;
+  background: transparent;
+  color: #7D8799;
+  appearance: none; /* 기본 브라우저 스타일 제거 */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23999" d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+
+  &:focus {
+    outline: none;
+  }
 `;
