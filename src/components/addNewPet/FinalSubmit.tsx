@@ -55,7 +55,7 @@ const FinalSubmit = () => {
     form.append("species", breed);
     form.append("pet_name", name);
     form.append("birth_date", birth);
-    form.append("fist_date", meet);
+    form.append("first_date", meet);
     form.append("death_date", death);
     form.append("personality", personality);
     form.append("nickname", nickname);

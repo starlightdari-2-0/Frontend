@@ -51,7 +51,7 @@ const mockConstellations: ConstellationData[] = [
 export const usePetStore = create<PetState>((set) => ({
     step: 0,
     name: "",
-    gender: "",
+    gender: "FEMALE",
     birth: "",
     meet: "",
     photo: null,

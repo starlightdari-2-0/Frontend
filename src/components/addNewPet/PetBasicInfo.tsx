@@ -9,7 +9,7 @@ import X from "/public/inputbox_X.svg";
 
 const PetBasicInfo = () => {
     const { step, name, gender, birth, meet, setName, setGender, setBirth, setMeet, setStep } = usePetStore();
-    const isFilled = !!name && !!gender && !!birth && !!meet;
+    const isFilled = name && gender && birth && meet;
     const maxLength = 20;
 
     return (
