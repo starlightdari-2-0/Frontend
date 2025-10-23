@@ -11,10 +11,6 @@ export const ListItem = styled.div`
   height: 70px;
   padding: 16px 0;
   opacity: 1;
-
-  &:hover {
-    background: #111;
-  }
 `;
 
 export const Content = styled.div`

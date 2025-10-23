@@ -15,10 +15,6 @@ export const ListItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  &:hover {
-    background: #111;
-  }
 `;
 
 export const Content = styled.div`
