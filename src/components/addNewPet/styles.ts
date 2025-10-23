@@ -102,37 +102,26 @@ export const ClearButton = styled.button`
   display: flex;
 `;
 
-// export const GenderOptions = styled.div`
-//   display: flex;
-//   gap: 10px;
-// `;
+export const SelectWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
 
-// export const GenderButton = styled.label<{ isSelected: boolean }>`
-//   padding: 10px;
-//   background: ${({ isSelected }) => (isSelected ? "#4b5563" : "#374151")};
-//   color: ${({ isSelected }) => (isSelected ? "#ADC3F3" : "#fff")};
-//   border: none;
-//   border-radius: 5px;
-//   cursor: pointer;
-//   transition: 0.2s;
-//   text-align: center;
-//   width: 100px;
+export const Select = styled.select`
+  width: 100%;
+  padding: 10px 16px;
+  height: 48.53px;
+  border: 1px solid #5D636F;
+  border-radius: 10px;
+  background: transparent;
+  color: #7D8799;
+  appearance: none; /* 기본 브라우저 스타일 제거 */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23999" d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
 
-//   &:hover {
-//     background: #4b5563;
-//   }
-
-//   input {
-//     display: none;
-//   }
-// `;
-
-// export const Select = styled.select`
-//   padding: 10px;
-//   border: 1px solid #374151;
-//   border-radius: 5px;
-//   background: #1f2937;
-//   color: white;
-//   font-size: 14px;
-//   width: 100%;
-// `;
+  &:focus {
+    outline: none;
+  }
+`;

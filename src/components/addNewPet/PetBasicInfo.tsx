@@ -1,13 +1,15 @@
+"use client";
+
 import React from "react";
 import { usePetStore } from "../../store/petStore";
-import { Container, Description, Title, Label, Input, Button, Header, Item, CharCount, InputWrapper, ClearButton, LabelWrapper } from "./styles";
+import { Container, Description, Title, Label, Input, Button, Header, Item, CharCount, InputWrapper, ClearButton, LabelWrapper, SelectWrapper, Select } from "./styles";
 import RequiredMark from "./RequiredMark";
 import Image from "next/image";
 import X from "/public/inputbox_X.svg";
 
 const PetBasicInfo = () => {
-    const { step, name, birth, meet, setName, setBirth, setMeet, setStep } = usePetStore();
-    const isFilled = !!name && !!birth && !!meet;
+    const { step, name, gender, birth, meet, setName, setGender, setBirth, setMeet, setStep } = usePetStore();
+    const isFilled = !!name && !!gender && !!birth && !!meet;
     const maxLength = 20;
 
     return (
@@ -32,6 +34,19 @@ const PetBasicInfo = () => {
                         <ClearButton onClick={() => setName("")}><Image src={X} alt="X" /></ClearButton>
                     )}
                 </InputWrapper>
+            </Item>
+            <Item>
+                <Label>성별<RequiredMark /></Label>
+                <SelectWrapper>
+                    <Select
+                        name="성별"
+                        value={gender}
+                        onChange={(e) => setGender(e.target.value)}>
+                        <option value="FEMALE">암컷</option>
+                        <option value="MALE">수컷</option>
+                        <option value="NONE">모르겠어요</option>
+                    </Select>
+                </SelectWrapper>
             </Item>
             <Item>
                 <Label>태어난 날<RequiredMark /></Label>
