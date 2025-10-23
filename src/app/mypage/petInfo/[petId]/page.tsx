@@ -77,11 +77,11 @@ export default function Page() {
 
     // await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 로딩 지연 시뮬레이션
 
-    // if (petId === 123) {
-    //   return mockPetData;
-    // } else {
-    //   return null; // 정보 없음 시뮬레이션
-    // }
+    if (petId === 123) {
+      return mockPetData;
+    } else {
+      return null; // 정보 없음 시뮬레이션
+    }
 
     try {
       const response = await axios({

@@ -64,7 +64,7 @@ const PetCard: React.FC<PetCardProps> = ({
                     <More onClick={() => setShowMenu(!showMenu)}>
                         <Image src={more} alt="more" /></More>
                     {showMenu && (
-                        <ContextMenu
+                        <ContextMenu $top="48px"
                             onEdit={() => {
                                 alert("수정 페이지로 이동");
                                 setShowMenu(false);
