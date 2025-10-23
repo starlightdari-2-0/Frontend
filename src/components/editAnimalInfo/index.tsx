@@ -13,24 +13,7 @@ import dog from "/public/animal/dog.svg";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
-export interface EditingPetFormData {
-  pet_id: number;
-  pet_name: string;
-  species: string;
-  gender: string;
-  birth_date: string;
-  death_date: string;
-  personality: string;
-  nickname: string;
-}
-
-const GENDER_OPTIONS = [
-  { label: "암컷", value: "FEMALE" },
-  { label: "수컷", value: "MALE" },
-  { label: "모르겠어요", value: "NONE" },
-];
-///
-interface PetInfoData {
+export interface PetInfoData {
   pet_id: number;
   pet_img: string;
   pet_name: string;
@@ -45,6 +28,12 @@ interface PetInfoData {
   nickname: string;
   context: string;
 }
+
+const GENDER_OPTIONS = [
+  { label: "암컷", value: "FEMALE" },
+  { label: "수컷", value: "MALE" },
+  { label: "모르겠어요", value: "NONE" },
+];
 
 const mockPetData: PetInfoData = {
   pet_id: 123,
@@ -61,7 +50,7 @@ const mockPetData: PetInfoData = {
   nickname: "별빛주인",
   context: "너무 귀여운 우리 루비"
 };
-///
+
 const fetchPetInfo = async (petId: number) => {
   const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
   ///

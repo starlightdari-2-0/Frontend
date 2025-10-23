@@ -13,11 +13,13 @@ import { useQuery } from "@tanstack/react-query";
 export interface PetInfoData {
   pet_id: number;
   pet_img: string;
+  //   pet_img: File | null;
   pet_name: string;
   animal_type: string;
   species: string;
   gender: string;
   birth_date: string;
+  first_date: string;
   death_date: string;
   personality: string;
   member_id: number;
@@ -48,6 +50,7 @@ const mockPetData: PetInfoData = {
   species: "치와와",
   gender: "FEMALE",
   birth_date: "2018.05.20",
+  first_date: "2018.05.20",
   death_date: "2024.10.02",
   personality: "CHARMING",
   member_id: 456,
