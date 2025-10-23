@@ -18,7 +18,6 @@ const FinalSubmit = () => {
   const fetchConstellations = async (type: number) => {
     const response = await axios.get<ConstellationData[]>(`http://${server_url}:8080/constellation/${type}`, {
       withCredentials: true,
-      headers: { "Content-Type": "multipart/form-data;charset=utf-8" },
     });
     return response.data;
   };
@@ -43,24 +42,32 @@ const FinalSubmit = () => {
   }, [type]);
 
   const handleSubmit = async () => {
+    const form = new FormData();
+
+    form.append("gender", gender);
+    if (photo) {
+      // photo가 File 객체일 때만 FormData에 추가
+      form.append("pet_img", photo);
+    }
+    form.append("animal_type_id", String(type));
+    // 선택한 별자리 추가
+    // form.append("con_id", constellation_id); 
+    form.append("species", breed);
+    form.append("pet_name", name);
+    form.append("birth_date", birth);
+    form.append("fist_date", meet);
+    form.append("death_date", death);
+    form.append("personality", personality);
+    form.append("nickname", nickname);
+    form.append("context", letter);
+
     try {
       const response = await axios.post(`http://${server_url}:8080/pets`,
+        form,
         {
-          gender: gender,
-          pet_img: photo,
-          animal_type_id: type,
-          // 선택한 별자리 추가 필요
-          // con_id: constellation_id,
-          species: breed,
-          pet_name: name,
-          birth_date: birth,
-          fist_date: meet,
-          death_date: death,
-          personality: personality,
-          nickname: nickname,
-          context: letter
-        },
-        { withCredentials: true }
+          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: true
+        }
       );
       console.log("반려동물 정보 제출 성공:", response.data);
       alert("반려동물 정보가 성공적으로 기록되었습니다!");
