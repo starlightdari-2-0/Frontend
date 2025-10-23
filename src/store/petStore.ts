@@ -6,7 +6,6 @@ interface ConstellationData {
     thumbnail_img: string;
 }
 
-// 성별, 선택한 별자리 추가 필요
 interface PetState {
     step: number;
     name: string;
@@ -21,6 +20,7 @@ interface PetState {
     death: string;
     type: number;
     constellations: ConstellationData[];
+    constellation_id: number;
     setStep: (step: number) => void;
     setName: (name: string) => void;
     setGender: (gender: string) => void;
@@ -34,6 +34,7 @@ interface PetState {
     setDeath: (value: string) => void
     setType: (type: number) => void;
     setConstellations: (data: ConstellationData[]) => void;
+    setConstellationId: (constellation_id: number) => void;
     reset: () => void;
     setAll: (data: Partial<PetState>) => void;
 }
@@ -62,6 +63,7 @@ export const usePetStore = create<PetState>((set) => ({
     type: 0,
     // constellations: [],
     constellations: mockConstellations,
+    constellation_id: 0,
     setStep: (step) => set({ step }),
     setName: (name) => set({ name }),
     setGender: (gender) => set({ gender }),
@@ -75,6 +77,7 @@ export const usePetStore = create<PetState>((set) => ({
     setDeath: (value) => set({ death: value }),
     setType: (type) => set({ type }),
     setConstellations: (constellations) => set({ constellations }),
+    setConstellationId: (constellation_id) => set({ constellation_id }),
     reset: () =>
         set({
             name: "",
