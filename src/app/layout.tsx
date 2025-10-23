@@ -5,7 +5,12 @@ import StyledComponentsRegistry from "./lib/registry";
 import Providers from "./providers";
 import GlobalModal from "../components/modal/GlobalModal";
 
+const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL
+  ? `https://${process.env.NEXT_PUBLIC_SERVER_URL}`
+  : 'http://localhost:3000';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(BASE_URL),
   title: "별빛다리",
   description: "반려동물과의 소중한 순간을 기록하고 반짝이는 별로 간직하세요.",
   keywords: ["별빛다리", "추억", "기록", "반려동물", "별", "별자리"],
