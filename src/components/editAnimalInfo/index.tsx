@@ -21,7 +21,7 @@ export interface PetInfoData {
   species: string;
   gender: string;
   birth_date: string;
-  fist_date: string;
+  first_date: string;
   death_date: string;
   personality: string;
   member_id: number;
@@ -43,7 +43,7 @@ const mockPetData: PetInfoData = {
   species: "치와와",
   gender: "MALE",
   birth_date: "2018-01-20",
-  fist_date: "2018-05-20",
+  first_date: "2018-05-20",
   death_date: "2024-10-02",
   personality: "ACTIVE",
   member_id: 456,
@@ -146,7 +146,7 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
           species: breed,
           pet_name: name,
           birth_date: birth,
-          fist_date: meet,
+          first_date: meet,
           death_date: death,
           personality: personality,
           nickname: nickname,
