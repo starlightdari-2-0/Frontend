@@ -24,16 +24,25 @@ export const SlideWrapper = styled.div`
   justify-content: center;
 `
 
-export const ImageWrapper = styled.div`
+export const ImageWrapper = styled.div<{ selected: boolean }>`
   width: 232px;
   height: 310px;
   padding: 14.33px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #2A2F39;
+  background: ${({ selected }) => (selected ? '#3C424B' : '#2A2F39')};
+  border: ${({ selected }) => (selected ? '1px solid #AFCBFB' : 'none')};
   border-radius: 14.33px;
-`
+  cursor: pointer;
+`;
+
+export const ImageButton = styled.button`
+  border: none;
+  background: none;
+  width: 100%;
+  height: 100%;
+`;
 
 export const SlideImage = styled(Image)`
   width: 220px;

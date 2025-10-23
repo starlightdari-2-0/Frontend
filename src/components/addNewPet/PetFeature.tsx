@@ -1,3 +1,5 @@
+"use client";
+
 import styled from "styled-components"
 import { usePetStore } from "../../store/petStore"
 import { Container, Button, Description, Input, Label, Title, Header, Item } from "./styles"
@@ -10,8 +12,8 @@ const ButtonGroup = styled.div`
   width: 250px;
 `
 const OptionButton = styled.button<{ selected: boolean }>`
-  background-color: ${({ selected }) => (selected ? "#2a2f3a" : "#3C424B")};
-  color: ${({ selected }) => (selected ? "#6c63ff" : "#D9E0ED")};
+  background-color: ${({ selected }) => (selected ? "#AFCBFB" : "#3C424B")};
+  color: ${({ selected }) => (selected ? "#1F2027" : "#D9E0ED")};
   padding: 4px 12px;
   border-radius: 8px;
   cursor: pointer;
@@ -21,23 +23,30 @@ const OptionButton = styled.button<{ selected: boolean }>`
 const PetFeature = () => {
     const { step, personality, breed, setPersonality, setBreed, setStep } = usePetStore()
 
-    const personalityOptions = ["활발한", "차분한", "내향적인", "쿨한", "사랑스러운", "애교많은"]
+    const personalityMap: Record<string, string> = {
+        "활발한": "ACTIVE",
+        "차분한": "CALM",
+        "내향적인": "INTROVERT",
+        "쿨한": "COOL",
+        "사랑스러운": "LOVELY",
+        "애교많은": "AFFECTIONATE",
+    };
 
     return (
         <Container>
             <Header>
                 <Title>반려동물의 특징을 골라주세요</Title>
-                <Description>반려동물의 종, 성격을 선정해주세요. 추후에 고치고 싶다면 변경할 수 있어요</Description>
+                <Description>반려동물의 종, 성격을 선정해주세요.</Description>
             </Header>
             <Item>
                 <Label>성격<RequiredMark /></Label>
                 <Description>반려동물의 성격을 한 가지 골라주세요</Description>
                 <ButtonGroup>
-                    {personalityOptions.map((option) => (
+                    {Object.keys(personalityMap).map((option) => (
                         <OptionButton
                             key={option}
-                            selected={personality === option}
-                            onClick={() => setPersonality(option)}
+                            selected={personality === personalityMap[option]}
+                            onClick={() => setPersonality(personalityMap[option])}
                         >
                             {option}
                         </OptionButton>
@@ -46,7 +55,7 @@ const PetFeature = () => {
             </Item>
             <Item>
                 <Label>종</Label>
-                <Description>반려동물의 상세한 종을 적어주세요<br />예시) 골든리트리버, 말티즈</Description>
+                <Description>반려동물의 상세한 종을 적어주세요</Description>
                 <Input
                     placeholder="예시) 골든리트리버, 말티즈"
                     value={breed}

@@ -2,14 +2,16 @@
 
 import React, { useEffect, useRef } from "react";
 import axios from "axios";
-import { AddButton, Button, ButtonGroup, CharCount, ClearButton, DefaultPreview, Description, Input, InputWrapper, Item, Label, LabelWrapper, OptionButton, Preview, PreviewWrapper, Star, StarWrapper } from "./styles";
+import { AddButton, Button, ButtonGroup, CharCount, ClearButton, DefaultPreview, Description, Input, InputWrapper, Item, Label, LabelWrapper, OptionButton, Preview, PreviewWrapper, Select, SelectWrapper, Star, StarWrapper } from "./styles";
 import { usePetStore } from "../../store/petStore";
+import { useModalStore } from "../../store/useModalStore";
 import Image from "next/image";
 import X from "/public/inputbox_X.svg";
 import add from "/public/add.svg";
-import arrow from "/public/arrow_right.svg";
+import defaultImg from "/public/default_animal.svg";
 import dog from "/public/animal/dog.svg";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 export interface EditingPetFormData {
   pet_id: number;
@@ -23,13 +25,52 @@ export interface EditingPetFormData {
 }
 
 const GENDER_OPTIONS = [
-  { label: "여성", value: "FEMALE" },
-  { label: "남성", value: "MALE" },
+  { label: "암컷", value: "FEMALE" },
+  { label: "수컷", value: "MALE" },
   { label: "모르겠어요", value: "NONE" },
 ];
+///
+interface PetInfoData {
+  pet_id: number;
+  pet_img: string;
+  pet_name: string;
+  animal_type: string;
+  species: string;
+  gender: string;
+  birth_date: string;
+  fist_date: string;
+  death_date: string;
+  personality: string;
+  member_id: number;
+  nickname: string;
+  context: string;
+}
 
+const mockPetData: PetInfoData = {
+  pet_id: 123,
+  pet_img: "/maru.svg",
+  pet_name: "루비",
+  animal_type: "강아지",
+  species: "치와와",
+  gender: "MALE",
+  birth_date: "2018-01-20",
+  fist_date: "2018-05-20",
+  death_date: "2024-10-02",
+  personality: "ACTIVE",
+  member_id: 456,
+  nickname: "별빛주인",
+  context: "너무 귀여운 우리 루비"
+};
+///
 const fetchPetInfo = async (petId: number) => {
   const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
+  ///
+  if (petId === 123) {
+    return mockPetData;
+  } else {
+    return null; // 정보 없음 시뮬레이션
+  }
+  ///
   const { data } = await axios.get(`http://${server_url}:8080/pets/${petId}`, {
     // withCredentials: true,
   });
@@ -41,9 +82,12 @@ interface EditAnimalInfoProps {
 }
 
 const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
-  const { name, birth, meet, photo, personality, breed, nickname, death, setAll, setName, setBirth, setMeet, setPhoto, setPersonality, setBreed, setNickname, setDeath } = usePetStore();
+  const router = useRouter();
+  const { openModal, closeModal } = useModalStore();
+
+  const { name, birth, gender, meet, photo, personality, breed, nickname, death, setAll, setName, setBirth, setGender, setMeet, setPhoto, setPersonality, setBreed, setNickname, setDeath } = usePetStore();
   const fileRef = useRef<HTMLInputElement | null>(null);
-  const isFilled = !!name && !!birth && !!meet && !photo || !personality;
+  const isFilled = name && birth && meet && photo && personality;
   const maxLength = 20;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,6 +117,7 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
     if (pet) {
       setAll({
         name: pet.pet_name,
+        gender: pet.gender,
         birth: pet.birth_date,
         meet: pet.first_date,
         photo: pet.pet_img,
@@ -93,9 +138,7 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
     try {
       const response = await axios.patch(`http://${server_url}:8080/pets/${petId}`,
         {
-          // 성별, 선택한 별자리 추가 필요
-          // constellation_id: selectedConstellationId,
-          // gender: gender,
+          gender: gender,
           pet_img: photo,
           species: breed,
           pet_name: name,
@@ -110,12 +153,23 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
 
       console.log("반려동물 정보 수정 완료:", response.data);
       alert("반려동물 정보가 성공적으로 수정되었습니다!");
+      closeModal();
       // 다음 페이지로 라우팅 추가 필요
       // router.push("/");
     } catch (error) {
       console.error("반려동물 정보 수정 중 오류 발생:", error);
       alert("정보 수정에 실패했습니다. 서버 상태를 확인해 주세요.");
+      closeModal();
     }
+  };
+
+  const handleSaveButtonClick = () => {
+    openModal("CONFIRM", {
+      title: `프로필 변경 사항을 \n적용하시겠습니까?`,  // 줄바꿈 적용 필요
+      confirmText: "확인",
+      cancelText: "취소",
+      onConfirm: handleSave,
+    });
   };
 
   return (
@@ -124,7 +178,7 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
         {photo ? (
           <Preview src={photo} alt="preview" width={100} height={100} />
         ) : (
-          <DefaultPreview />
+          <DefaultPreview src={defaultImg} alt="default" width={100} height={100} />
         )}
         <AddButton onClick={() => fileRef.current?.click()}><Image src={add} alt="" width={24} height={24} /></AddButton>
       </PreviewWrapper>
@@ -140,7 +194,7 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
         <Description>반려동물의 별자리는 수정할 수 없어요</Description>
         <StarWrapper>
           <Image src={dog} alt="" />
-          <Star>강아지<Image src={arrow} alt="" />골든리트리버</Star>
+          <Star>강아지</Star>
         </StarWrapper>
       </Item>
       <Item>
@@ -160,12 +214,36 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
         </InputWrapper>
       </Item>
       <Item>
+        <Label>성별</Label>
+        <SelectWrapper>
+          <Select
+            name="성별"
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}>
+            {GENDER_OPTIONS.map(option => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </Select>
+        </SelectWrapper>
+      </Item>
+      <Item>
         <Label>태어난 날</Label>
         <Input
           type="date"
           placeholder="태어난 날"
           value={birth}
           onChange={(e) => setBirth(e.target.value)}
+        />
+      </Item>
+      <Item>
+        <Label>처음 만난 날</Label>
+        <Input
+          type="date"
+          placeholder="처음 만난 날"
+          value={meet}
+          onChange={(e) => setMeet(e.target.value)}
         />
       </Item>
       <Item>
@@ -184,27 +262,18 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
       </Item>
       <Item>
         <Label>종</Label>
-        {/* <Description>반려동물의 상세한 종을 적어주세요<br />예시) 골든리트리버, 말티즈</Description> */}
         <Input
           placeholder="예시) 골든리트리버, 말티즈"
           value={breed}
           onChange={(e) => setBreed(e.target.value)}
         />
       </Item>
-      <Item>
-        <Label>처음 만난 날</Label>
-        <Input
-          type="date"
-          placeholder="처음 만난 날"
-          value={meet}
-          onChange={(e) => setMeet(e.target.value)}
-        />
-      </Item>
+      {/* 한 줄 기록 추가 필요 */}
       <Item>
         <Label>별나라로 간 날</Label>
         <Input type="date" value={death} onChange={(e) => setDeath(e.target.value)} />
       </Item>
-      <Button disabled={!isFilled} onClick={handleSave}>수정하기</Button>
+      <Button disabled={!isFilled} onClick={handleSaveButtonClick}>수정하기</Button>
     </>
   );
 };

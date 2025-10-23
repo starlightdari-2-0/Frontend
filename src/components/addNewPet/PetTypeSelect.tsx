@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import styled from "styled-components";
 import { usePetStore } from "../../store/petStore";
@@ -17,7 +19,7 @@ const List = styled.div`
 `;
 
 const Option = styled.button<{ selected: boolean }>`
-  background: ${(p) => (p.selected ? "#666" : "#2A2F39")};
+  background: ${(p) => (p.selected ? "#4A576E" : "#2A2F39")};
   color: #D9E0ED;
   width: 328px;
   height: 48px;
@@ -27,12 +29,11 @@ const Option = styled.button<{ selected: boolean }>`
   font-family: Pretendard;
   font-weight: 500;
   font-size: 16px;
-  leading-trim: NONE;
   line-height: 150%;
-  letter-spacing: 0%;
-  border: none;
+  border: ${(p) => (p.selected ? "1px solid #AFCBFB" : "none")};
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const Button = styled.button<{ disabled: boolean }>`

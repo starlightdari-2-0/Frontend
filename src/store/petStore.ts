@@ -10,6 +10,7 @@ interface ConstellationData {
 interface PetState {
     step: number;
     name: string;
+    gender: string;
     birth: string;
     meet: string;
     photo: string | null;
@@ -22,6 +23,7 @@ interface PetState {
     constellations: ConstellationData[];
     setStep: (step: number) => void;
     setName: (name: string) => void;
+    setGender: (gender: string) => void;
     setBirth: (birth: string) => void;
     setMeet: (meet: string) => void;
     setPhoto: (photo: string) => void;
@@ -48,6 +50,7 @@ const mockConstellations: ConstellationData[] = [
 export const usePetStore = create<PetState>((set) => ({
     step: 0,
     name: "",
+    gender: "",
     birth: "",
     meet: "",
     photo: null,
@@ -61,6 +64,7 @@ export const usePetStore = create<PetState>((set) => ({
     constellations: mockConstellations,
     setStep: (step) => set({ step }),
     setName: (name) => set({ name }),
+    setGender: (gender) => set({ gender }),
     setBirth: (birth) => set({ birth }),
     setMeet: (meet) => set({ meet }),
     setPhoto: (photo) => set({ photo }),

@@ -100,7 +100,6 @@ export const Value = styled.div`
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
-  letter-spacing: 0%;
 `;
 
 export const Description = styled.p`
@@ -108,7 +107,6 @@ export const Description = styled.p`
   font-weight: 400;
   font-size: 14px;
   line-height: 150%;
-  letter-spacing: 0%;
 `;
 
 export const Tag = styled(Value)`

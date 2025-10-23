@@ -7,6 +7,8 @@ interface ConfirmModalProps {
     onConfirm: () => void;
     title: string;
     description?: string;
+    confirmText?: string;
+    cancelText?: string;
 }
 
 export default function ConfirmModal({
@@ -14,13 +16,15 @@ export default function ConfirmModal({
     onConfirm,
     title,
     description,
+    confirmText,
+    cancelText
 }: ConfirmModalProps) {
     return (
         <CommonModal
             title={title}
             description={description}
-            confirmText="삭제하기"
-            cancelText="취소하기"
+            confirmText={confirmText || "삭제하기"}
+            cancelText={cancelText || "취소하기"}
             onConfirm={onConfirm}
             onCancel={onClose}
         />
