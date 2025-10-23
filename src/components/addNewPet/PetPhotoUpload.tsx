@@ -31,12 +31,7 @@ const Preview = styled(Image)`
   object-fit: cover;
 `;
 
-const DefaultPreview = styled(Image)`
-  width: 160px;
-  height: 160px;
-  border-radius: 999px;
-  object-fit: cover;
-`;
+const DefaultPreview = styled(Preview)``;
 
 const AddButton = styled.button`
   position: absolute;
