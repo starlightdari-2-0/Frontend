@@ -23,7 +23,14 @@ const OptionButton = styled.button<{ selected: boolean }>`
 const PetFeature = () => {
     const { step, personality, breed, setPersonality, setBreed, setStep } = usePetStore()
 
-    const personalityOptions = ["활발한", "차분한", "내향적인", "쿨한", "사랑스러운", "애교많은"]
+    const personalityMap: Record<string, string> = {
+        "활발한": "ACTIVE",
+        "차분한": "CALM",
+        "내향적인": "INTROVERT",
+        "쿨한": "COOL",
+        "사랑스러운": "LOVELY",
+        "애교많은": "AFFECTIONATE",
+    };
 
     return (
         <Container>
@@ -35,11 +42,11 @@ const PetFeature = () => {
                 <Label>성격<RequiredMark /></Label>
                 <Description>반려동물의 성격을 한 가지 골라주세요</Description>
                 <ButtonGroup>
-                    {personalityOptions.map((option) => (
+                    {Object.keys(personalityMap).map((option) => (
                         <OptionButton
                             key={option}
-                            selected={personality === option}
-                            onClick={() => setPersonality(option)}
+                            selected={personality === personalityMap[option]}
+                            onClick={() => setPersonality(personalityMap[option])}
                         >
                             {option}
                         </OptionButton>
