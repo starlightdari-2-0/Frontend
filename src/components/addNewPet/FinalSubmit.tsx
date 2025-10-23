@@ -18,7 +18,7 @@ const FinalSubmit = () => {
   const fetchConstellations = async (type: number) => {
     const response = await axios.get<ConstellationData[]>(`http://${server_url}:8080/constellation/${type}`, {
       withCredentials: true,
-      headers: { "Content-Type": "application/json;charset=utf-8" },
+      headers: { "Content-Type": "multipart/form-data;charset=utf-8" },
     });
     return response.data;
   };
