@@ -1,3 +1,5 @@
+"use client";
+
 import { usePetStore } from "../../store/petStore";
 import { Container, Button, Description, Input, Label, Title, Header, Item, LabelWrapper, CharCount, InputWrapper, ClearButton } from "./styles";
 import RequiredMark from "./RequiredMark";
