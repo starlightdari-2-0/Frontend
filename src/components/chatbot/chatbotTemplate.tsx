@@ -79,7 +79,7 @@ const ChatbotModalTemplate = ({
 
     try {
       const response = await axios.post(
-        `http://${server_url}:8080/chat`,
+        `${server_url}/chat`,
         { category, question },
         { withCredentials: true }
       );
@@ -88,12 +88,12 @@ const ChatbotModalTemplate = ({
         prev.map((msg, index) =>
           index === prev.length - 1
             ? {
-                ...msg,
-                response: response.data.answer,
-                extraMessage:
-                  "추가적인 질문이 있다면 답변해드릴게요. 다른 카테고리가 궁금하시다면 돌아가기 버튼을 눌러주세요.",
-                showBackButton: true,
-              }
+              ...msg,
+              response: response.data.answer,
+              extraMessage:
+                "추가적인 질문이 있다면 답변해드릴게요. 다른 카테고리가 궁금하시다면 돌아가기 버튼을 눌러주세요.",
+              showBackButton: true,
+            }
             : msg
         )
       );
@@ -103,10 +103,10 @@ const ChatbotModalTemplate = ({
         prevMessages.map((msg, index) =>
           index === prevMessages.length - 1
             ? {
-                ...msg,
-                response: "오류가 발생했습니다. 다시 시도해주세요.",
-                showBackButton: true,
-              }
+              ...msg,
+              response: "오류가 발생했습니다. 다시 시도해주세요.",
+              showBackButton: true,
+            }
             : msg
         )
       );

@@ -137,7 +137,7 @@ const EditStarModal: React.FC<AddStarModalProps> = ({ onClose, starId }) => {
 
       const response = await axios({
         method: "POST",
-        url: `http://${server_url}:8080/memory-stars`,
+        url: `${server_url}/memory-stars`,
         withCredentials: true,
         data: data,
       });

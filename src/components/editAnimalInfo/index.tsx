@@ -60,7 +60,7 @@ const fetchPetInfo = async (petId: number) => {
     return null; // 정보 없음 시뮬레이션
   }
   ///
-  const { data } = await axios.get(`http://${server_url}:8080/pets/${petId}`, {
+  const { data } = await axios.get(`${server_url}/pets/${petId}`, {
     // withCredentials: true,
   });
   return data;
@@ -139,7 +139,7 @@ const EditAnimalInfo = ({ petId }: EditAnimalInfoProps) => {
     const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
 
     try {
-      const response = await axios.patch(`http://${server_url}:8080/pets/${petId}`,
+      const response = await axios.patch(`${server_url}/pets/${petId}`,
         {
           gender: gender,
           pet_img: photo,

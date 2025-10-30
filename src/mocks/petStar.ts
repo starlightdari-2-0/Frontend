@@ -1,10 +1,11 @@
 import { PetData } from "../components/constellationCanvas";
+const s3_url = process.env.NEXT_PUBLIC_S3_PUBLIC_BASE_URL;
 
 export const mockPetDataList: PetData[] = [
     {
         "petId": 1,
         "petName": "kkong1",
-        "thumbnail_img": "https://starlightbucket.s3.ap-northeast-2.amazonaws.com/constellationSvg/DOG_poodle.svg",
+        "thumbnail_img": `${s3_url}/constellationSvg/DOG_poodle.svg`,
         "nodes": [
             {
                 "node_id": 1,
@@ -174,7 +175,7 @@ export const mockPetDataList: PetData[] = [
     {
         "petId": 2,
         "petName": "kkong1",
-        "thumbnail_img": "https://starlightbucket.s3.ap-northeast-2.amazonaws.com/constellationSvg/DOG_2.svg",
+        "thumbnail_img": `${s3_url}/constellationSvg/DOG_2.svg`,
         "nodes": [
             {
                 "node_id": 1,
@@ -344,7 +345,7 @@ export const mockPetDataList: PetData[] = [
     {
         "petId": 3,
         "petName": "kkong1",
-        "thumbnail_img": "https://starlightbucket.s3.ap-northeast-2.amazonaws.com/constellationSvg/DOG_3.svg",
+        "thumbnail_img": `${s3_url}/constellationSvg/DOG_3.svg`,
         "nodes": [
             {
                 "node_id": 1,
@@ -514,7 +515,7 @@ export const mockPetDataList: PetData[] = [
     {
         "petId": 4,
         "petName": "kkong1",
-        "thumbnail_img": "https://starlightbucket.s3.ap-northeast-2.amazonaws.com/constellationSvg/DOG_4.svg",
+        "thumbnail_img": `${s3_url}/constellationSvg/DOG_4.svg`,
         "nodes": [
             {
                 "node_id": 1,
@@ -684,7 +685,7 @@ export const mockPetDataList: PetData[] = [
     {
         "petId": 5,
         "petName": "kkong1",
-        "thumbnail_img": "https://starlightbucket.s3.ap-northeast-2.amazonaws.com/constellationSvg/DOG_5.svg",
+        "thumbnail_img": `${s3_url}/constellationSvg/DOG_5.svg`,
         "nodes": [
             {
                 "node_id": 1,
@@ -854,7 +855,7 @@ export const mockPetDataList: PetData[] = [
     {
         "petId": 6,
         "petName": "kkong1",
-        "thumbnail_img": "https://starlightbucket.s3.ap-northeast-2.amazonaws.com/constellationSvg/DOG_golden.svg",
+        "thumbnail_img": `${s3_url}/constellationSvg/DOG_golden.svg`,
         "nodes": [
             {
                 "node_id": 1,
@@ -1024,7 +1025,7 @@ export const mockPetDataList: PetData[] = [
     {
         "petId": 7,
         "petName": "kkong1",
-        "thumbnail_img": "https://starlightbucket.s3.ap-northeast-2.amazonaws.com/constellationSvg/DOG_chiwawa.svg",
+        "thumbnail_img": `${s3_url}/constellationSvg/DOG_chiwawa.svg`,
         "nodes": [
             {
                 "node_id": 1,

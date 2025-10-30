@@ -19,7 +19,7 @@ const ProfileEdit = () => {
         try {
             const response = await axios({
                 method: "PUT",
-                url: `http://${server_url}:8080/member/name`,
+                url: `${server_url}/member/name`,
                 withCredentials: true,
                 headers: {
                     "Content-Type": "application/json;charset=utf-8",

@@ -34,7 +34,7 @@ const MemoryPage = () => {
       try {
         const response = await axios({
           method: "GET",
-          url: `http://${server_url}:8080/memory-stars/public`,
+          url: `${server_url}/memory-stars/public`,
           //   withCredentials: true,
         });
 

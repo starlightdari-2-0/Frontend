@@ -35,7 +35,7 @@ const MemoryStarCollection = () => {
       try {
         const response = await axios({
           method: "GET",
-          url: `http://${server_url}:8080/memory-stars`,
+          url: `${server_url}/memory-stars`,
           withCredentials: true,
         });
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { create } from "zustand";
 // ConfirmModalProps가 ModalState 대신 사용될 수 있도록 types 파일 업데이트가 필요할 수 있습니다.
 import { ModalType, ConfirmModalProps } from "../components/modal/types";
