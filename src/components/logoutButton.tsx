@@ -16,7 +16,7 @@ const LogoutButton = () => {
     try {
       const response = await axios({
         method: "POST",
-        url: `http://${server_url}:8080/api/auth/kakao/logout`,
+        url: `${server_url}/auth/kakao/logout`,
         withCredentials: true,
         headers: {
           "Content-Type": "application/json;charset=utf-8",

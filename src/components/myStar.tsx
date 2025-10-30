@@ -25,7 +25,7 @@ const MyStar = () => {
       try {
         const response = await axios({
           method: "GET",
-          url: `http://${server_url}:8080/pets`,
+          url: `${server_url}/pets`,
           withCredentials: true,
         });
 

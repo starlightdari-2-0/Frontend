@@ -6,7 +6,7 @@ import Providers from "./providers";
 import GlobalModal from "../components/modal/GlobalModal";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SERVER_URL
-  ? `https://${process.env.NEXT_PUBLIC_SERVER_URL}`
+  ? process.env.NEXT_PUBLIC_SERVER_URL
   : 'http://localhost:3000';
 
 export const metadata: Metadata = {

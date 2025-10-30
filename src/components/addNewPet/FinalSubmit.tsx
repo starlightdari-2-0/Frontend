@@ -16,7 +16,7 @@ const FinalSubmit = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchConstellations = async (type: number) => {
-    const response = await axios.get<ConstellationData[]>(`http://${server_url}:8080/constellation/${type}`, {
+    const response = await axios.get<ConstellationData[]>(`${server_url}/constellation/${type}`, {
       withCredentials: true,
     });
     return response.data;
@@ -62,7 +62,7 @@ const FinalSubmit = () => {
     form.append("context", letter);
 
     try {
-      const response = await axios.post(`http://${server_url}:8080/pets`,
+      const response = await axios.post(`${server_url}/pets`,
         form,
         {
           headers: { "Content-Type": "multipart/form-data" },

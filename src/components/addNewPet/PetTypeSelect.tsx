@@ -75,7 +75,7 @@ const PetTypeSelect = () => {
         if (!type) return;
         try {
             const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
-            const response = await axios.get(`http://${server_url}:8080/constellation/${type}`, {
+            const response = await axios.get(`${server_url}/constellation/${type}`, {
                 withCredentials: true,
             });
             setConstellations(response.data);

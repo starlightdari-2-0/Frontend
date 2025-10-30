@@ -26,7 +26,7 @@ export default function Page() {
 
           await axios({
             method: "GET",
-            url: `http://${server_url}:8080/api/auth/kakao/callback`,
+            url: `${server_url}/auth/kakao/callback`,
             withCredentials: true,
             params: { code },
           });

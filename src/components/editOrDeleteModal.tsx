@@ -20,7 +20,7 @@ const EditOrDeleteModal: React.FC<MoreModalProps> = ({ onClose, memoryId }) => {
   //     try {
   //       const response = await axios({
   //         method: "PATCH",
-  //         url: `http://${server_url}:8080/memory-stars/${memoryId}`,
+  //         url: `${server_url}/memory-stars/${memoryId}`,
   //         withCredentials: true,
   //         data: {}
   //       });
@@ -37,7 +37,7 @@ const EditOrDeleteModal: React.FC<MoreModalProps> = ({ onClose, memoryId }) => {
     try {
       const response = await axios({
         method: "DELETE",
-        url: `http://${server_url}:8080/memory-stars/${memoryId}`,
+        url: `${server_url}/memory-stars/${memoryId}`,
         withCredentials: true,
       });
 

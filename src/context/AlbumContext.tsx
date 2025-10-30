@@ -66,7 +66,7 @@ export const AlbumProvider: React.FC<{ children: ReactNode }> = ({
         console.log("fetchPetList 실행됨, petId:", petId);
 
         const response = await axios.get(
-          `http://${server_url}:8080/memory-album/status`,
+          `${server_url}/memory-album/status`,
           { withCredentials: true }
         );
         setAlbumData(response.data);
@@ -87,7 +87,7 @@ export const AlbumProvider: React.FC<{ children: ReactNode }> = ({
     try {
       const response = await axios({
         method: "GET",
-        url: `http://${server_url}:8080/memory-album/pet/${petId}`,
+        url: `${server_url}/memory-album/pet/${petId}`,
         withCredentials: true,
       });
 
@@ -101,7 +101,7 @@ export const AlbumProvider: React.FC<{ children: ReactNode }> = ({
   const fetchLetterDetail = async (letterId: number) => {
     try {
       const response = await axios.get(
-        `http://${server_url}:8080/memory-album/letter/${letterId}`,
+        `${server_url}/memory-album/letter/${letterId}`,
         { withCredentials: true }
       );
       setLetterDetail(response.data);

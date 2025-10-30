@@ -47,7 +47,7 @@ const PetCard: React.FC<PetCardProps> = ({
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://${server_url}:8080/pets/${petId}`, {
+            await axios.delete(`${server_url}/pets/${petId}`, {
                 withCredentials: true,
             });
         } catch (error) {

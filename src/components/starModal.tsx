@@ -82,7 +82,7 @@ const StarPage: React.FC<StarPageModalProps> = ({ onClose, memoryId }) => {
     try {
       const response = await axios({
         method: "GET",
-        url: `http://${server_url}:8080/member/logined`,
+        url: `${server_url}/member/logined`,
         withCredentials: true,
       });
 
@@ -97,7 +97,7 @@ const StarPage: React.FC<StarPageModalProps> = ({ onClose, memoryId }) => {
     try {
       const response = await axios({
         method: "GET",
-        url: `http://${server_url}:8080/memory-stars/${memoryId}`,
+        url: `${server_url}/memory-stars/${memoryId}`,
         withCredentials: true,
       });
 
@@ -138,7 +138,7 @@ const StarPage: React.FC<StarPageModalProps> = ({ onClose, memoryId }) => {
     try {
       const response = await axios({
         method: "POST",
-        url: `http://${server_url}:8080/memory-stars/${memoryId}/likes`,
+        url: `${server_url}/memory-stars/${memoryId}/likes`,
         withCredentials: true,
       });
 
@@ -153,7 +153,7 @@ const StarPage: React.FC<StarPageModalProps> = ({ onClose, memoryId }) => {
     try {
       const response = await axios({
         method: "DELETE",
-        url: `http://${server_url}:8080/memory-stars/${memoryId}/likes`,
+        url: `${server_url}/memory-stars/${memoryId}/likes`,
         withCredentials: true,
       });
 
@@ -168,7 +168,7 @@ const StarPage: React.FC<StarPageModalProps> = ({ onClose, memoryId }) => {
     try {
       const response = await axios({
         method: "POST",
-        url: `http://${server_url}:8080/memory-stars/comment`,
+        url: `${server_url}/memory-stars/comment`,
         withCredentials: true,
         data: {
           content: content,
@@ -195,7 +195,7 @@ const StarPage: React.FC<StarPageModalProps> = ({ onClose, memoryId }) => {
     try {
       const response = await axios({
         method: "GET",
-        url: `http://${server_url}:8080/memory-stars/${memoryId}/comments`,
+        url: `${server_url}/memory-stars/${memoryId}/comments`,
         withCredentials: true,
       });
       console.log("서버 응답:", response);
@@ -214,7 +214,7 @@ const StarPage: React.FC<StarPageModalProps> = ({ onClose, memoryId }) => {
     try {
       const response = await axios({
         method: "PUT",
-        url: `http://${server_url}:8080/memory-stars/comment`,
+        url: `${server_url}/memory-stars/comment`,
         withCredentials: true,
         data: {
           content: editText[commentId],
@@ -235,7 +235,7 @@ const StarPage: React.FC<StarPageModalProps> = ({ onClose, memoryId }) => {
     try {
       const response = await axios({
         method: "DELETE",
-        url: `http://${server_url}:8080/memory-stars/comment/${commentId}`,
+        url: `${server_url}/memory-stars/comment/${commentId}`,
         withCredentials: true,
       });
 

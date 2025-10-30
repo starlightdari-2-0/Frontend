@@ -89,7 +89,7 @@ export default function Page() {
     try {
       const response = await axios({
         method: "GET",
-        url: `http://${server_url}:8080/pets/${petId}`,
+        url: `${server_url}/pets/${petId}`,
         withCredentials: true,
       });
       return response.data;
