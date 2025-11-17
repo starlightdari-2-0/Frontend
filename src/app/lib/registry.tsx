@@ -17,8 +17,8 @@ export default function StyledComponentsRegistry({
     return <>{styles}</>;
   });
 
-  if (typeof window !== "undefined") {
-    // 클라이언트에서는 그냥 children만 렌더링
+  // 클라이언트 환경에서는 StyleSheetManager로 감쌀 필요 없이 바로 children을 반환
+  if (typeof window !== 'undefined') {
     return <>{children}</>;
   }
 

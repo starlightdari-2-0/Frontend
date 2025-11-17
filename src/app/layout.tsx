@@ -40,8 +40,8 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
+        <GlobalStyle />
         <StyledComponentsRegistry>
-          <GlobalStyle />
           <Providers>
             {children}
             <GlobalModal />
