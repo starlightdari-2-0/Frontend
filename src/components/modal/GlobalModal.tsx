@@ -1,4 +1,3 @@
-// src/components/modal/GlobalModal.tsx
 "use client";
 
 import React from 'react';
