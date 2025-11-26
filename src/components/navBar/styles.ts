@@ -16,7 +16,7 @@ export const Nav = styled.div`
   transform: translateX(-50%);
 `;
 
-export const NavItem = styled.div<{ active?: boolean }>`
+export const NavItem = styled.div<{ $active?: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -27,5 +27,5 @@ export const NavItem = styled.div<{ active?: boolean }>`
   gap: 4px;
   opacity: 1;
   cursor: pointer;
-  color: ${({ active }) => (active ? "white" : "#888")};
+  color: ${({ $active }) => ($active ? "white" : "#888")};
 `;

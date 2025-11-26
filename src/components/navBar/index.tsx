@@ -19,7 +19,7 @@ type ItemProps = {
 };
 
 const Item = ({ active, activeIcon, inactiveIcon, label, onClick }: ItemProps) => (
-  <NavItem active={active} onClick={onClick}>
+  <NavItem $active={active} onClick={onClick}>
     <Image src={active ? activeIcon : inactiveIcon} alt={label} />
     {label}
   </NavItem>
