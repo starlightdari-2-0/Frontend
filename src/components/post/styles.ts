@@ -79,7 +79,6 @@ export const Content = styled.div`
 
 export const PostImage = styled(Image)`
   width: 100%;
-  border-radius: 8px;
   border-radius: 24px;
 `;
 
@@ -109,6 +108,7 @@ export const LikeButton = styled.button<{ $active: boolean }>`
   border-radius: 999px;
   border: ${({ $active }) =>
     $active ? "1px solid #AFCBFB" : "1px solid #3c424b"};
+  white-space: nowrap;
 `;
 
 export const Count = styled.span`

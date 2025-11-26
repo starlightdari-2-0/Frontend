@@ -1,6 +1,10 @@
 "use client";
 
+import React from "react";
+import { PostType } from "../../types/postType";
+import Header from "../../components/header";
 import { Post } from "../../components/post";
+import { Container } from "./styles";
 
 const mockPost: PostType = {
     id: 1,
@@ -37,11 +41,6 @@ const mockPost: PostType = {
         },
     ],
 };
-
-import React from "react";
-import { PostType } from "../../types/postType";
-import Header from "../../components/header";
-import { Container } from "./styles";
 
 const MyPost = () => {
     return (

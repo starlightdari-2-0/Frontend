@@ -19,7 +19,6 @@ export const Post: React.FC<PostProps> = ({ post }) => {
     const [likes, setLikes] = useState(post.likes);
     const [newComment, setNewComment] = useState("");
 
-
     const toggleLike = (type: "like1" | "like2" | "like3") => {
         setLikes((prev) => ({
             ...prev,
