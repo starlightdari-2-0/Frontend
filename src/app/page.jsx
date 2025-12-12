@@ -31,7 +31,7 @@ export default function Home() {
       <Image alt="logo" src={logo} />
 
       {showSplash ? (
-        <SplashBox fadeOut={splashFading}>
+        <SplashBox $fadeOut={splashFading}>
           <Image alt="logo" src={starlight} />
         </SplashBox >
       ) : (
