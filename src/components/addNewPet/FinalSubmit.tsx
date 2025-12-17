@@ -44,14 +44,13 @@ const FinalSubmit = () => {
   const handleSubmit = async () => {
     const form = new FormData();
 
-    form.append("gender", gender);
+    form.append("gender", String(gender));
     if (photo) {
       // photo가 File 객체일 때만 FormData에 추가
       form.append("pet_img", photo);
     }
     form.append("animal_type_id", String(type));
-    // 선택한 별자리 추가
-    // form.append("con_id", constellation_id); 
+    form.append("con_id", String(constellation_id));
     form.append("species", breed);
     form.append("pet_name", name);
     form.append("birth_date", birth);
