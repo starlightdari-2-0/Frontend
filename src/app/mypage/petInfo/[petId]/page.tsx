@@ -1,6 +1,5 @@
 "use client";
 
-// import "../globals.css";
 import React, { useEffect, useState } from "react";
 import Header from "../../../../components/header";
 import Image from "next/image";
@@ -13,7 +12,6 @@ import { useQuery } from "@tanstack/react-query";
 export interface PetInfoData {
   pet_id: number;
   pet_img: string;
-  //   pet_img: File | null;
   pet_name: string;
   animal_type: string;
   species: string;
@@ -42,22 +40,6 @@ const PersonalityMap: Record<string, string> = {
   SENSITIVE: "감수성이 풍부해요",
 };
 
-const mockPetData: PetInfoData = {
-  pet_id: 123,
-  pet_img: "/maru.svg",
-  pet_name: "루비",
-  animal_type: "강아지",
-  species: "치와와",
-  gender: "FEMALE",
-  birth_date: "2018.05.20",
-  first_date: "2018.05.20",
-  death_date: "2024.10.02",
-  personality: "CHARMING",
-  member_id: 456,
-  nickname: "별빛주인",
-  context: "너무 귀여운 우리 루비"
-};
-
 export default function Page() {
   const router = useRouter();
   const params = useParams();
@@ -77,14 +59,6 @@ export default function Page() {
 
   const getUsersPetInfo = async (petId: number): Promise<PetInfoData | null> => {
     const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
-
-    // await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 로딩 지연 시뮬레이션
-
-    if (petId === 123) {
-      return mockPetData;
-    } else {
-      return null; // 정보 없음 시뮬레이션
-    }
 
     try {
       const response = await axios({
