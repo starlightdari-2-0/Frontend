@@ -22,13 +22,16 @@ export const metadata: Metadata = {
     siteName: "별빛다리",
     images: [
       {
-        url: "/starlight-logo.png",
+        url: "/logo.svg",
         width: 750,
         height: 750,
         alt: "별빛다리 로고",
       },
     ],
     type: "website",
+  },
+  icons: {
+    icon: "/logo.svg",
   },
 };
 
@@ -40,8 +43,8 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
+        <GlobalStyle />
         <StyledComponentsRegistry>
-          <GlobalStyle />
           <Providers>
             {children}
             <GlobalModal />

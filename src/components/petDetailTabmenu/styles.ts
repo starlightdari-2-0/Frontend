@@ -1,0 +1,24 @@
+import styled from "styled-components";
+
+export const TabMenuWrapper = styled.div`
+  display: flex;
+  border-bottom: 1px solid #2A2F39;
+`;
+
+export const Tab = styled.div<{ $active: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  padding: 0.5rem;
+  border-bottom: ${({ $active }) => ($active ? "2px solid #AFCBFB" : "none")};
+  cursor: pointer;
+
+    color: ${({ $active }) => ($active ? "#AFCBFB" : "#7D8799")};
+    text-decoration: none;
+    font-family: Pretendard;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 150%;
+    text-align: center;
+`;

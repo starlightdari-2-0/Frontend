@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import star from "/public/starCount.svg";
-import addStar from "/public/addStar.svg";
+import addStar from "/public/addStar_dark.svg";
 import { AddCard, Card, Count, Label, List, Name, PetImage, Plus } from "./styles";
 
 interface Constellation {

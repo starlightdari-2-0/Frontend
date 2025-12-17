@@ -7,12 +7,17 @@ import Image from "next/image";
 import like from "/public/like_L.svg";
 import comment from "/public/myComment.svg";
 
+interface PostListProps {
+  activeTab?: "letter" | "memory";
+  openModal?: () => void;
+}
+
 const dummyPosts = [
   { id: 1, title: "제목제목제목", date: "2025.08.25", author: "후추자리", likes: 3, comments: 5 },
   { id: 2, title: "새로운 글 제목", date: "2025.08.22", author: "후추자리", likes: 1, comments: 2 },
 ];
 
-const PostList = () => {
+const PostList: React.FC<PostListProps> = ({ activeTab, openModal }) => {
   const router = useRouter();
 
   return (

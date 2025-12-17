@@ -4,7 +4,6 @@ import axios from "axios";
 import { useParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import Header from "../../../components/header";
 import BottomMessage from "../../../components/addStarMessage";
 import AddStarModal from "../../../components/addStarModal";
 import ConstellationCanvas, { PetData, Star } from "../../../components/constellationCanvas";
@@ -12,6 +11,8 @@ import StarPage from "../../../components/starModal";
 import Image from "next/image";
 import { Body } from "./styles";
 import { mockPetDataList } from "../../../mocks/petStar";
+import { StarSwitchModal } from "../../../components/starSwitchModal";
+import Header from "../../../components/starPageHeader";
 
 export default function Page() {
   const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -20,29 +21,33 @@ export default function Page() {
 
   const [selectedStarId, setSelectedStarId] = useState<number | null>(null);
   const [selectedMemoryId, setSelectedMemoryId] = useState<number | null>(0); // 임의 지정
-
+  const [isSwitchModalOpen, setIsSwitchModalOpen] = useState(false);
   const [isAddStarModalOpen, setIsAddStarModalOpen] = useState(false);
   const [isStarInfoModalOpen, setIsStarInfoModalOpen] = useState(false);
   const [messageVisible, setMessageVisible] = useState(false);
   const messageRef = useRef<HTMLDivElement>(null);
 
-  // const pet = mockPetDataList.find(p => p.petId === Number(params.petId))!;
 
 
   // // 별자리 정보 fetch 함수 (mock)
-  // const fetchPetStarInfo = async (): Promise<PetData> => {
-  //   await new Promise((resolve) => setTimeout(resolve, 800)); // 0.8초 지연
-  //   return pet;
-  // };
+  const fetchPetStarInfo = async (): Promise<PetData> => {
+    await new Promise((resolve) => setTimeout(resolve, 300)); // 0.3초 지연
+    const pet = mockPetDataList.find(p => p.petId === Number(params.petId))!;
+    if (!pet) {
+      // 데이터가 없을 경우 에러를 발생시킵니다.
+      throw new Error(`Mock data for petId ${petId} not found.`);
+    }
+    return pet;
+  };
 
   // 별자리 정보 fetch 함수
-  const fetchPetStarInfo = async (): Promise<PetData> => {
-    const response = await axios.get(`${server_url}/pets/${petId}/stars`, {
-      withCredentials: true,
-      headers: { "Content-Type": "application/json;charset=utf-8" },
-    });
-    return response.data;
-  };
+  // const fetchPetStarInfo = async (): Promise<PetData> => {
+  //   const response = await axios.get(`${server_url}/pets/${petId}/stars`, {
+  //     withCredentials: true,
+  //     headers: { "Content-Type": "application/json;charset=utf-8" },
+  //   });
+  //   return response.data;
+  // };
 
   const {
     data: petData,
@@ -53,6 +58,14 @@ export default function Page() {
     queryFn: fetchPetStarInfo,
     enabled: !!petId,
   });
+
+  const openSwitchModal = () => {
+    setIsSwitchModalOpen(true);
+  };
+
+  const closeSwitchModal = () => {
+    setIsSwitchModalOpen(false);
+  };
 
   const openAddStarModal = () => {
     setIsAddStarModalOpen(true);
@@ -91,7 +104,8 @@ export default function Page() {
       if (
         !messageRef.current?.contains(event.target as Node) &&
         !isAddStarModalOpen &&
-        !isStarInfoModalOpen
+        !isStarInfoModalOpen &&
+        !isSwitchModalOpen
       ) {
         setMessageVisible(false);
         setSelectedStarId(null);
@@ -102,7 +116,7 @@ export default function Page() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isAddStarModalOpen, isStarInfoModalOpen]);
+  }, [isAddStarModalOpen, isStarInfoModalOpen, isSwitchModalOpen]);
 
   const handleAddStar = (starId: number | null) => {
     setMessageVisible(false);
@@ -118,7 +132,7 @@ export default function Page() {
 
   return (
     <>
-      <Header title={`${petData.petName}자리`} />
+      <Header title={`${petData.petName}자리`} onTitleClick={openSwitchModal} />
       <Body>
         <ConstellationCanvas
           petData={petData}
@@ -142,6 +156,10 @@ export default function Page() {
           onClose={closeStarInfoModal}
         />
       )}
+      <StarSwitchModal
+        open={isSwitchModalOpen}
+        onClose={closeSwitchModal}
+      />
     </>
   );
 }
