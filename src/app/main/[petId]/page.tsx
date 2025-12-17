@@ -10,7 +10,6 @@ import ConstellationCanvas, { PetData, Star } from "../../../components/constell
 import StarPage from "../../../components/starModal";
 import Image from "next/image";
 import { Body } from "./styles";
-import { mockPetDataList } from "../../../mocks/petStar";
 import { StarSwitchModal } from "../../../components/starSwitchModal";
 import Header from "../../../components/starPageHeader";
 
@@ -27,27 +26,13 @@ export default function Page() {
   const [messageVisible, setMessageVisible] = useState(false);
   const messageRef = useRef<HTMLDivElement>(null);
 
-
-
-  // // 별자리 정보 fetch 함수 (mock)
   const fetchPetStarInfo = async (): Promise<PetData> => {
-    await new Promise((resolve) => setTimeout(resolve, 300)); // 0.3초 지연
-    const pet = mockPetDataList.find(p => p.petId === Number(params.petId))!;
-    if (!pet) {
-      // 데이터가 없을 경우 에러를 발생시킵니다.
-      throw new Error(`Mock data for petId ${petId} not found.`);
-    }
-    return pet;
+    const response = await axios.get(`${server_url}/pets/${petId}/stars`, {
+      withCredentials: true,
+      headers: { "Content-Type": "application/json;charset=utf-8" },
+    });
+    return response.data;
   };
-
-  // 별자리 정보 fetch 함수
-  // const fetchPetStarInfo = async (): Promise<PetData> => {
-  //   const response = await axios.get(`${server_url}/pets/${petId}/stars`, {
-  //     withCredentials: true,
-  //     headers: { "Content-Type": "application/json;charset=utf-8" },
-  //   });
-  //   return response.data;
-  // };
 
   const {
     data: petData,

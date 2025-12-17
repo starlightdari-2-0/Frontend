@@ -44,14 +44,13 @@ const FinalSubmit = () => {
   const handleSubmit = async () => {
     const form = new FormData();
 
-    form.append("gender", gender);
+    form.append("gender", String(gender));
     if (photo) {
       // photo가 File 객체일 때만 FormData에 추가
       form.append("pet_img", photo);
     }
     form.append("animal_type_id", String(type));
-    // 선택한 별자리 추가
-    // form.append("con_id", constellation_id); 
+    form.append("con_id", String(constellation_id));
     form.append("species", breed);
     form.append("pet_name", name);
     form.append("birth_date", birth);
@@ -72,7 +71,7 @@ const FinalSubmit = () => {
       console.log("반려동물 정보 제출 성공:", response.data);
       alert("반려동물 정보가 성공적으로 기록되었습니다!");
 
-      router.push(`/pet/${response.data.petId}`);
+      router.push(`/main/${response.data.petId}`);
 
     } catch (error) {
       console.error("반려동물 정보 생성 실패:", error);
