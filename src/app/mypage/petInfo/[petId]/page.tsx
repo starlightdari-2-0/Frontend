@@ -1,13 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Header from "../../../../components/header";
-import Image from "next/image";
-import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { Body } from "./styles";
 import PetCard from "../../../../components/petCard";
-import { useQuery } from "@tanstack/react-query";
+import { usePetInfo } from "../../../../hooks/usePetInfo";
 
 export interface PetInfoData {
   pet_id: number;
@@ -45,33 +43,7 @@ export default function Page() {
   const params = useParams();
   const petId = Number(params.petId);
 
-  const {
-    data: petData,
-    isLoading,
-    isError,
-    error
-  } = useQuery<PetInfoData | null>({
-    queryKey: ["petInfo", petId], // 쿼리 키에 petId를 포함하여 URL 변경 시 refetch되도록 설정
-    queryFn: () => getUsersPetInfo(petId),
-    enabled: !!petId && petId > 0, // petId가 유효할 때만 쿼리를 실행합니다.
-    staleTime: 5 * 60 * 1000, // 5분 동안은 데이터를 신선하게 간주하여 재요청 방지
-  });
-
-  const getUsersPetInfo = async (petId: number): Promise<PetInfoData | null> => {
-    const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
-
-    try {
-      const response = await axios({
-        method: "GET",
-        url: `${server_url}/pets/${petId}`,
-        withCredentials: true,
-      });
-      return response.data;
-    } catch (error) {
-      console.error("반려동물 정보 요청 중 오류 발생:", error);
-      throw error;
-    };
-  };
+  const { data: petData, isLoading, isError, error } = usePetInfo(petId);
 
   if (isLoading) {
     return (
