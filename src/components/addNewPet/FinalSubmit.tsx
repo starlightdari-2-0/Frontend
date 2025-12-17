@@ -71,7 +71,7 @@ const FinalSubmit = () => {
       console.log("반려동물 정보 제출 성공:", response.data);
       alert("반려동물 정보가 성공적으로 기록되었습니다!");
 
-      router.push(`/pet/${response.data.petId}`);
+      router.push(`/main/${response.data.petId}`);
 
     } catch (error) {
       console.error("반려동물 정보 생성 실패:", error);
