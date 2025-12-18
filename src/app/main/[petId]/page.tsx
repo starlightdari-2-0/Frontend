@@ -27,7 +27,7 @@ export default function Page() {
   const messageRef = useRef<HTMLDivElement>(null);
 
   const fetchPetStarInfo = async (): Promise<PetData> => {
-    const response = await axios.get(`${server_url}/pets/${petId}/stars`, {
+    const response = await axios.get(`${server_url}/constellation/pets/${petId}`, {
       withCredentials: true,
       headers: { "Content-Type": "application/json;charset=utf-8" },
     });
