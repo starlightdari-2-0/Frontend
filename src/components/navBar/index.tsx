@@ -1,11 +1,11 @@
 import React from "react";
 import Image from "next/image";
-import community from "/public/navi_community_active.svg";
-import community_inactive from "/public/navi_community_inactive.svg";
-import mystar from "/public/navi_mystar_active.svg";
-import mystar_inactive from "/public/navi_mystar_inactive.svg";
-import mypage from "/public/navi_mypage_active.svg";
-import mypage_inactive from "/public/navi_mypage_inactive.svg";
+import community from "/public/navi/navi_community_active.svg";
+import community_inactive from "/public/navi/navi_community_inactive.svg";
+import mystar from "/public/navi/navi_mystar_active.svg";
+import mystar_inactive from "/public/navi/navi_mystar_inactive.svg";
+import mypage from "/public/navi/navi_mypage_active.svg";
+import mypage_inactive from "/public/navi/navi_mypage_inactive.svg";
 
 import { useRouter } from "next/navigation";
 import { Nav, NavItem } from "./styles"
@@ -35,7 +35,7 @@ const NavBar = () => {
         active={false}
         activeIcon={community}
         inactiveIcon={community_inactive}
-        onClick={() => router.push(`/mypage/community`)}
+        onClick={() => router.push(`/starCommunity`)}
       />
       <Item
         label="내 별자리"
