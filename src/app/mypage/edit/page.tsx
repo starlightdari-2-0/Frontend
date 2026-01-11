@@ -35,6 +35,7 @@ const ProfileEdit = () => {
             try {
                 const userData = await getUserInfo();
                 setProfileImg(userData.profile_img);
+                setNickname(userData.st_nickname);
             } catch (error) {
                 console.error("유저 정보 로드 실패:", error);
             }
@@ -56,8 +57,8 @@ const ProfileEdit = () => {
                     nickname: nickname,
                 },
             });
-
-            console.log("서버 응답:", response);
+            alert("닉네임이 성공적으로 변경되었습니다.");
+            router.push("/mypage/myInfo");
         } catch (error) {
             console.error("유저 닉네임 수정 중 오류 발생:", error);
         }
@@ -98,7 +99,7 @@ const ProfileEdit = () => {
                 )}
             </InputWrapper>
 
-            <SubmitButton onClick={saveUserNickname}>변경하기</SubmitButton>
+            <SubmitButton onClick={saveUserNickname} $isActive={nickname.length > 0} disabled={nickname.length === 0}>변경하기</SubmitButton>
         </Container>
     );
 };

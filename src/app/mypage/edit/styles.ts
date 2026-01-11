@@ -107,22 +107,23 @@ export const ClearButton = styled.button`
   display: flex;
 `;
 
-export const SubmitButton = styled.button`
+export const SubmitButton = styled.button<{ $isActive?: boolean }>`
   width: calc(100% - 32px);
   padding: 12px;
   border: none;
   border-radius: 8px;
-  background: #AFCBFB;
-  color: #1F2027;
-  cursor: pointer;
+  background: ${(props) => (props.$isActive ? "#AFCBFB" : "#3C424B")};
+  color: ${(props) => (props.$isActive ? "#1F2027" : "#7D8799")};
+  cursor: ${(props) => (props.$isActive ? "pointer" : "not-allowed")};
   font-family: Pretendard;
   font-weight: 500;
   font-size: 18px;
   line-height: 150%;
+  transition: all 0.2s ease;
   position: absolute;
   bottom: 40px;
 
   &:hover {
-    background: #8fb8ff;
+    background: ${(props) => (props.$isActive ? "#8fb8ff" : "#3C424B")};
   }
 `;
