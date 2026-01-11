@@ -18,7 +18,6 @@ const getUserInfo = async () => {
         withCredentials: true,
         headers: { "Content-Type": "application/json;charset=utf-8" },
     });
-    console.log(response.data);
     return response.data;
 };
 

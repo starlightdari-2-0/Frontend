@@ -28,7 +28,7 @@ export default function Page() {
       try {
         setIsLoading(true);
         const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
-        const response = await axios.get(`${server_url}/api/pets`, {
+        const response = await axios.get(`${server_url}/pets`, {
           withCredentials: true,
           headers: { "Content-Type": "application/json;charset=utf-8" },
         });
