@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Image from "next/image";
 
 export const List = styled.div`
   display: flex;
@@ -20,12 +21,13 @@ export const Card = styled.div`
   padding: 12px;
 `;
 
-export const PetImage = styled.img`
+export const PetImage = styled(Image)`
   width: 60px;
   height: 60px;
   border-radius: 999px;
   background: gray;
   margin: 0 auto;
+  object-fit: cover;
 `;
 
 export const Label = styled.div`
