@@ -27,6 +27,7 @@ export const Info = styled.div`
 export const Nickname = styled.div`
   font-size: 16px;
   font-weight: bold;
+  color: #FFFFFF;
 `;
 
 export const ChangeBtn = styled.button`
