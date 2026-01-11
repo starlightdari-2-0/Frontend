@@ -11,11 +11,6 @@ interface UserData {
     profile_img: string;
 }
 
-const mockUserData = {
-    nickname: "젬마",
-    profile_img: "https://place-puppy.com/80x80",
-};
-
 // 유저 닉네임, 프로필 사진 받아오기
 const getUserInfo = async () => {
     const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -23,11 +18,8 @@ const getUserInfo = async () => {
         withCredentials: true,
         headers: { "Content-Type": "application/json;charset=utf-8" },
     });
+    console.log(response.data);
     return response.data;
-
-    // // Mock 데이터 반환 (1초 지연)
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
-    // return mockUserData;
 };
 
 const UserInfo = () => {
