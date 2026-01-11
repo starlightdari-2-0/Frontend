@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Image from "next/image";
 
 export const Container = styled.div`
   margin: 0 auto;
@@ -39,7 +40,14 @@ export const Title = styled.div`
   font-weight: bold;
 `;
 
-export const ProfileImage = styled.div`
+export const ProfileImage = styled(Image)`
+  width: 100px;
+  height: 100px;
+  border-radius: 999px;
+  margin: 16px 0;
+`;
+
+export const DefaultProfileImage = styled.div`
   width: 100px;
   height: 100px;
   border-radius: 999px;
