@@ -7,7 +7,7 @@ import { Container, UserImage, Info, Nickname, ChangeBtn, SkeletonUI } from "./s
 import { useRouter } from "next/navigation";
 
 interface UserData {
-    nickname: string;
+    st_nickname: string;
     profile_img: string;
 }
 
@@ -32,9 +32,9 @@ const UserInfo = () => {
 
 
     // 로딩 시 스켈레톤 UI 변경 필요
-    // if (isLoading) {
-    //     return <SkeletonUI />;
-    // }
+    if (isLoading) {
+        return <SkeletonUI />;
+    }
 
     if (isError || !userData) {
         return <h1>로그인에 실패하였습니다.</h1>;
@@ -50,7 +50,7 @@ const UserInfo = () => {
                     height={70}
                     unoptimized
                 />
-                <Nickname>{userData.nickname}</Nickname>
+                <Nickname>{userData.st_nickname}</Nickname>
             </Info>
             <ChangeBtn onClick={() => router.push("/mypage/edit")}>변경하기</ChangeBtn>
         </Container>
