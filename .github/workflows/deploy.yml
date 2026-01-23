@@ -46,3 +46,11 @@ jobs:
           # 상태 확인
           docker ps -a
           docker logs frontend
+          
+    - name: Discord 알림 (배포 성공)
+      if: success()
+      run: |
+        MSG="✅ 프론트엔드 서버 배포 성공"
+        curl -H "Content-Type: application/json" \
+          -d "{\"content\":\"${MSG}\"}" \
+          "${{ secrets.DISCORD_WEBHOOK }}"
