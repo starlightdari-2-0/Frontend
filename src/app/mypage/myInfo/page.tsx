@@ -32,12 +32,11 @@ export default function Page() {
           withCredentials: true,
           headers: { "Content-Type": "application/json;charset=utf-8" },
         });
-        // TODO: count는 백엔드에서 추가될 예정이므로 현재는 0으로 임시 설정
         const mappedData: Constellation[] = response.data.map((pet: any) => ({
           id: pet.pet_id,
           name: pet.pet_name,
-          imageUrl: pet.pet_svg,
-          count: 0, // TODO: 백엔드 업데이트 후 실제 count 값으로 변경
+          imageUrl: pet.pet_img,
+          count: pet.star_count,
         }));
         setConstellations(mappedData);
         setIsError(false);
