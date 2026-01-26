@@ -24,18 +24,41 @@ export interface PetInfoData {
 }
 
 const GenderMap: Record<string, string> = {
-  MALE: "남성",
-  FEMALE: "여성",
+  MALE: "수컷",
+  FEMALE: "암컷",
   NONE: "모르겠어요",
 };
 
+// editAnimalInfo와 동일한 PersonalityMap 사용
 const PersonalityMap: Record<string, string> = {
-  CHARMING: "애교가 많아요",
-  INDEPENDENT: "혼자서도 잘 놀아요",
-  CURIOUS: "호기심이 많아요",
-  CALM: "얌전해요",
-  STUBBORN: "자기주장이 강해요",
-  SENSITIVE: "감수성이 풍부해요",
+  ACTIVE: "활발한",
+  CALM: "차분한",
+  INTROVERT: "내향적인",
+  COOL: "쿨한",
+  LOVELY: "사랑스러운",
+  AFFECTIONATE: "애교많은",
+};
+
+// 동물 종 이미지 매핑
+const typeIconMap: Record<string, string> = {
+  강아지: "/animal/dog.svg",
+  고양이: "/animal/cat.svg",
+  어류: "/animal/fish.svg",
+  조류: "/animal/bird.svg",
+  파충류: "/animal/reptile.svg",
+  소동물: "/animal/hamster.svg",
+  "그 외": "/animal/default.svg",
+};
+
+// 동물 종 이름 (번호 → 이름)
+const typeNumberToNameMap: Record<number, string> = {
+  1: "강아지",
+  2: "고양이",
+  3: "어류",
+  4: "조류",
+  5: "파충류",
+  6: "소동물",
+  7: "그 외",
 };
 
 export default function Page() {
@@ -65,6 +88,11 @@ export default function Page() {
     );
   }
 
+  // 성격 데이터 매핑
+  const personality = petData.personality ? PersonalityMap[petData.personality] || petData.personality : "";
+  // 성별 데이터 매핑
+  const gender = petData.gender ? GenderMap[petData.gender] : "";
+
   return (
     <>
       <Body>
@@ -78,8 +106,8 @@ export default function Page() {
             breed={petData.species}
             count={0}
             description={petData.context}
-            gender={petData.gender ? GenderMap[petData.gender] : ""}
-            personality={petData.personality ? PersonalityMap[petData.personality] : ""}
+            gender={gender}
+            personality={personality}
             imageUrl={petData.pet_img}
           />
         ) : (
