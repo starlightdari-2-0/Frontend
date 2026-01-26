@@ -68,7 +68,7 @@ const PetCard: React.FC<PetCardProps> = ({
                     {showMenu && (
                         <ContextMenu $top="48px"
                             onEdit={() => {
-                                alert("수정 페이지로 이동");
+                                router.push(`/edit_pet_info/${petId}`);
                                 setShowMenu(false);
                             }}
                             onDelete={() => {

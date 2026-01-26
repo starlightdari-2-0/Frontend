@@ -18,7 +18,7 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "starlightbucket.s3.ap-northeast-2.amazonaws.com",
-        port: "",
+        port: "/**",
       },
       {
         protocol: "https",
