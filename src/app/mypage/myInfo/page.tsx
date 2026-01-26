@@ -35,7 +35,7 @@ export default function Page() {
         const mappedData: Constellation[] = response.data.map((pet: any) => ({
           id: pet.pet_id,
           name: pet.pet_name,
-          imageUrl: pet.pet_svg,
+          imageUrl: pet.pet_img,
           count: pet.star_count,
         }));
         setConstellations(mappedData);
