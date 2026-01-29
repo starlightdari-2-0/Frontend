@@ -29,8 +29,6 @@ const UserInfo = () => {
         queryFn: getUserInfo,
     });
 
-
-    // 로딩 시 스켈레톤 UI 변경 필요
     if (isLoading) {
         return <Container>
             <Info>
