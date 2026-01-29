@@ -5,6 +5,13 @@ export const List = styled.div`
   display: flex;
   gap: 12px;
   overflow-x: auto;
+
+  /* 스크롤바 숨김 (선택 사항) */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 `;
 
 export const Card = styled.div`
