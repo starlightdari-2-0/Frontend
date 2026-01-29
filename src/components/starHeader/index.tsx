@@ -13,10 +13,12 @@ export function StarHeader({ current }: { current: StarItemData }) {
   const { data: petData, isLoading } = usePetInfo(petId);
 
   const handleInfoClick = () => {
+    console.log(petId)
     if (petId) {
       router.push(`/mypage/petInfo/${petId}`);
     }
   };
+  console.log("petData", petData)
 
   const petImageUrl = petData?.pet_img || animal;
   const petName = petData?.pet_name || current.name;
