@@ -73,7 +73,7 @@ export const UserSkeletonImage = styled.div`
 
 export const UserSkeletonNickname = styled.div`
   width: 40px;
-  height: 20px;
+  height: 21px;
   border-radius: 10px;
   background: #fff;
   background: #d9d9d929;
@@ -93,10 +93,9 @@ export const UserSkeletonNickname = styled.div`
 `;
 
 export const SkeletonButton = styled.div`
-  width: 40px;
-  height: 20px;
+  width: 74px;
+  height: 40px;
   border-radius: 10px;
-  background: #fff;
   background: #d9d9d929;
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   animation: pulse 1.7s infinite ease-in-out;
@@ -112,10 +111,3 @@ export const SkeletonButton = styled.div`
     }
   }
 `;
-
-// export const SkeletonUI = styled.div`
-//   width: 990px;
-//   height: 120px;
-//   border-radius: 18px;
-  
-// `;
