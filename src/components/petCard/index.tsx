@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import animal from "/public/animal/dog.svg";
 import starCount from "/public/starCount.svg";
 import more from "/public/title_more.svg";
 import birthday_icon from "/public/birthday_icon.svg";
@@ -11,6 +10,17 @@ import { useModalStore } from "../../store/useModalStore";
 import ContextMenu from "../menu/ContextMenu";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+
+// 동물 종 이미지 매핑
+const typeIconMap: Record<string, string> = {
+    DOG: "/animal/dog.svg",
+    CAT: "/animal/cat.svg",
+    FISH: "/animal/fish.svg",
+    BIRD: "/animal/bird.svg",
+    REPTILE: "/animal/reptile.svg",
+    SMALL_ANIMAL: "/animal/hamster.svg",
+    OTHER: "/animal/default.svg",
+};
 
 interface PetCardProps {
     petId: number;
@@ -98,8 +108,8 @@ const PetCard: React.FC<PetCardProps> = ({
 
                 <Row>
                     <IconWrapper width="158px">
-                        <Image src={animal} alt="animal" />
-                        {breed}
+                        <Image src={typeIconMap[animalType]} alt="animal" />
+                        {animalType}
                     </IconWrapper>
                     <IconWrapper width="158px">
                         <Image src={starCount} alt="star" />
@@ -109,7 +119,7 @@ const PetCard: React.FC<PetCardProps> = ({
 
                 <CommentSection>
                     <Label>한 줄 기록</Label>
-                    <Description>{description}</Description>
+                    <Description>{description == "" ? "한 줄 기록이 없습니다." : description}</Description>
                 </CommentSection>
 
                 <Section>
