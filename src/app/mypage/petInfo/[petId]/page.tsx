@@ -67,7 +67,7 @@ export default function Page() {
   const petId = Number(params.petId);
 
   const { data: petData, isLoading, isError, error } = usePetInfo(petId);
-
+  console.log(petData)
   if (isLoading) {
     return (
       <>
