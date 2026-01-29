@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Container, UserImage, Info, Nickname, ChangeBtn, SkeletonUI } from "./styles";
+import { Container, UserImage, Info, Nickname, ChangeBtn, UserSkeletonImage, UserSkeletonNickname, SkeletonButton } from "./styles";
 import { useRouter } from "next/navigation";
 
 interface UserData {
@@ -32,7 +32,12 @@ const UserInfo = () => {
 
     // 로딩 시 스켈레톤 UI 변경 필요
     if (isLoading) {
-        return <SkeletonUI />;
+        return <Container>
+            <Info>
+                <UserSkeletonImage />
+                <UserSkeletonNickname />
+            </Info>
+            <SkeletonButton /></Container>;
     }
 
     if (isError || !userData) {

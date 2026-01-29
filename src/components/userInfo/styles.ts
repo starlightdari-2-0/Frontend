@@ -34,28 +34,27 @@ export const ChangeBtn = styled.button`
   border: none;
   cursor: pointer;
   width: 74px;
-    height: 40px;
-    opacity: 1;
-    padding-top: 8px;
-    padding-right: 16px;
-    padding-bottom: 8px;
-    padding-left: 16px;
-    border-radius: 37px;
-    background: #AFCBFB;
-    color: #101014;
-    font-family: Pretendard;
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 150%;
-    text-align: center;
-    white-space: nowrap;
+  height: 40px;
+  padding-top: 8px;
+  padding-right: 16px;
+  padding-bottom: 8px;
+  padding-left: 16px;
+  border-radius: 37px;
+  background: #AFCBFB;
+  color: #101014;
+  font-family: Pretendard;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 150%;
+  text-align: center;
+  white-space: nowrap;
 `;
 
-// 새 디자인에 맞춰 변경 필요
-export const SkeletonUI = styled.div`
-  width: 990px;
-  height: 120px;
-  border-radius: 18px;
+export const UserSkeletonImage = styled.div`
+  width: 80px;
+  height: 80px;
+  border-radius: 999px;
+  background: #fff;
   background: #d9d9d929;
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   animation: pulse 1.7s infinite ease-in-out;
@@ -71,3 +70,52 @@ export const SkeletonUI = styled.div`
     }
   }
 `;
+
+export const UserSkeletonNickname = styled.div`
+  width: 40px;
+  height: 20px;
+  border-radius: 10px;
+  background: #fff;
+  background: #d9d9d929;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  animation: pulse 1.7s infinite ease-in-out;
+  @keyframes pulse {
+    0% {
+      background: rgba(200, 200, 200, 0.9);
+    }
+    50% {
+      background: rgba(200, 200, 200, 0.5);
+    }
+    100% {
+      background: rgba(200, 200, 200, 0.9);
+    }
+  }
+`;
+
+export const SkeletonButton = styled.div`
+  width: 40px;
+  height: 20px;
+  border-radius: 10px;
+  background: #fff;
+  background: #d9d9d929;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  animation: pulse 1.7s infinite ease-in-out;
+  @keyframes pulse {
+    0% {
+      background: rgba(200, 200, 200, 0.9);
+    }
+    50% {
+      background: rgba(200, 200, 200, 0.5);
+    }
+    100% {
+      background: rgba(200, 200, 200, 0.9);
+    }
+  }
+`;
+
+// export const SkeletonUI = styled.div`
+//   width: 990px;
+//   height: 120px;
+//   border-radius: 18px;
+  
+// `;
