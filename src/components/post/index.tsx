@@ -11,7 +11,6 @@ import send from "/public/send_comment.svg";
 import { useGetLoginedUserId } from "../../api/generated/member-controller/member-controller";
 import { useCreateLikeMemoryStar, useDeleteLikeMemoryStar, useSelectMemoryStarByMemId } from "../../api/generated/memory-star-controller/memory-star-controller";
 import { useCreateMemComment, useDeleteMemComment, useGetMemComment, useUpdateMemComment } from "../../api/generated/mem-comment-controller/mem-comment-controller";
-import { MemoryStarType } from "../../types/postType";
 import { MemoryStarRepDto } from "../../api/generated/model";
 
 interface PostProps {
