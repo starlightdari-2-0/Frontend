@@ -83,4 +83,12 @@ export const More = styled.button`
 export const Reply = styled.div`
   display: flex;
   gap: 12px;
+  width: 100%;
+
+  /* ㄴ자 아이콘 뒤에 오는 Comment 컴포넌트의 너비 조절 */
+  & > div:last-child {
+      flex: 1;
+      /* 대댓글은 부모보다 좁아져야 하므로 들여쓰기만큼 계산 */
+      width: calc(100% - 36px); 
+  }
 `;
