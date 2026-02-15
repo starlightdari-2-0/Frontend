@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import Image from "next/image";
 import { Comment } from "../comment";
-import axios from "axios";
 import { PostWrapper, PostImage, Author, LikeButton, Header, AuthorImage, Nickname, More, Body, ContentWrapper, Title, Content, Footer, LikeSection, Count, CommentInputContainer, SubmitButton, CommentInput, NoComment } from "./styles";
 import comment from "/public/myComment.svg";
 import more from "/public/comment_more.svg";
@@ -16,13 +15,6 @@ import { MemoryStarRepDto } from "../../api/generated/model";
 interface PostProps {
     post: MemoryStarRepDto;
 }
-
-/////////////////////////////////////
-// 좋아요 로직 잘 됐는지 확인, 댓글 로직 잘 됐는지 확인,
-// fetchComments 삭제했으니까 Optimistic UI 적용하게 바꿔야 함
-// api 타입 맞춰야 함
-/////////////////////////////////////
-
 
 export const Post: React.FC<PostProps> = ({ post }) => {
     const commentInputRef = useRef<HTMLInputElement>(null);
@@ -67,8 +59,7 @@ export const Post: React.FC<PostProps> = ({ post }) => {
         mutation: {
             onSuccess: () => refetchComments()
         }
-    }
-    );
+    });
 
     // 좋아요 토글 로직 대체
     const toggleLike = (type: "LIKE1" | "LIKE2" | "LIKE3") => {
@@ -130,161 +121,7 @@ export const Post: React.FC<PostProps> = ({ post }) => {
 
         return roots;
     }, [rawComments]);
-
-    // const [loginUserId, setLoginUserId] = useState<number | null>(null);
-    // const [starPage, setStarPage] = useState<any | null>(null);
-    // const [comments, setComments] = useState(post.comments || []);
-
-    // const toggleLike = async (type: "like1" | "like2" | "like3") => {
-    //     const reactionType = reactionTypeMap[type];
-    //     const isCurrentlyLiked = likes[type] === 1;
-
-    //     if (isCurrentlyLiked) {
-    //         await cancelLike(reactionType);
-    //     } else {
-    //         await addLike(reactionType);
-    //     }
-
-    //     setLikes((prev) => ({
-    //         ...prev,
-    //         [type]: prev[type] === 0 ? 1 : 0,
-    //     }));
-    // };
-
-    // const getLoginUserId = async () => {
-    //     try {
-    //         const response = await axios({
-    //             method: "GET",
-    //             url: `${server_url}/member/logined`,
-    //             withCredentials: true,
-    //         });
-    //         setLoginUserId(response.data);
-    //     } catch (error) {
-    //         console.error("로그인된 유저 정보 요청 중 오류 발생:", error);
-    //     }
-    // };
-
-    // const getStarInfo = async () => {
-    //     try {
-    //         const response = await axios({
-    //             method: "GET",
-    //             url: `${server_url}/memory-stars/${post.id}`,
-    //             withCredentials: true,
-    //         });
-    //         setStarPage(response.data.memoryStarRepDto);
-    //         setComments(response.data.memComments || []);
-    //     } catch (error) {
-    //         console.error("별 기록 요청 중 오류 발생:", error);
-    //     }
-    // };
-
-    // const reactionTypeMap: Record<"like1" | "like2" | "like3", string> = {
-    //     like1: "LIKE1",
-    //     like2: "LIKE2",
-    //     like3: "LIKE3",
-    // };
-
-    // const addLike = async (reactionType: string) => {
-    //     try {
-    //         await axios({
-    //             method: "POST",
-    //             url: `${server_url}/memory-stars/${post.id}/reactions/${reactionType}`,
-    //             withCredentials: true,
-    //         });
-    //         getStarInfo();
-    //     } catch (error) {
-    //         console.error("좋아요 클릭 중 오류 발생:", error);
-    //     }
-    // };
-
-    // const cancelLike = async (reactionType: string) => {
-    //     try {
-    //         await axios({
-    //             method: "DELETE",
-    //             url: `${server_url}/memory-stars/${post.id}/reactions/${reactionType}`,
-    //             withCredentials: true,
-    //         });
-    //         getStarInfo();
-    //     } catch (error) {
-    //         console.error("좋아요 취소 중 오류 발생:", error);
-    //     }
-    // };
-
-    // const addComment = async (content: string, parentId: number | null = null) => {
-    //     try {
-    //         const response = await axios({
-    //             method: "POST",
-    //             url: `${server_url}/memory-comments`,
-    //             withCredentials: true,
-    //             data: {
-    //                 content: content,
-    //                 memory_id: post.id,
-    //                 parent_id: parentId,
-    //             },
-    //         });
-    //         getStarInfo(); 
-    //         setNewComment("");
-    //     } catch (error) {
-    //         console.error("댓글 작성 중 오류 발생:", error);
-    //     }
-    // };
-
-    // const saveComment = async (commentId: number, content: string) => {
-    //     try {
-    //         const response = await axios({
-    //             method: "PUT",
-    //             url: `${server_url}/memory-comments`,
-    //             withCredentials: true,
-    //             data: {
-    //                 content: content,
-    //                 comment_id: commentId,
-    //             },
-    //         });
-    //         setComments((prev) =>
-    //             prev.map((comment) =>
-    //                 comment.comment_id === commentId ? response.data : comment
-    //             )
-    //         );
-    //     } catch (error) {
-    //         console.error("댓글 수정 중 오류 발생:", error);
-    //     }
-    // };
-
-    // const deleteComment = async (commentId: number) => {
-    //     try {
-    //         await axios({
-    //             method: "DELETE",
-    //             url: `${server_url}/memory-comments/${commentId}`,
-    //             withCredentials: true,
-    //         });
-    //         setComments((prev) =>
-    //             prev.filter((comment) => comment.comment_id !== commentId)
-    //         );
-    //     } catch (error) {
-    //         console.error("댓글 삭제 중 오류 발생:", error);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     if (server_url) {
-    //         getLoginUserId();
-    //         getStarInfo();
-    //     }
-    // }, [server_url]);
-
-    // const handleAddComment = () => {
-    //     if (newComment.trim()) {
-    //         addComment(newComment.trim());
-    //         setNewComment("");
-    //     }
-    // };
-
-    // const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    //     if (event.key === "Enter" && !event.shiftKey) {
-    //         event.preventDefault();
-    //         handleAddComment();
-    //     }
-    // };
+    console.log("가공된 댓글:", organizedComments);
 
     return (
         <PostWrapper>
