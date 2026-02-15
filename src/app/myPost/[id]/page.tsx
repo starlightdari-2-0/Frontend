@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import Header from "../../components/header";
-import { Post } from "../../components/post";
+import Header from "../../../components/header";
+import { Post } from "../../../components/post";
 import { Container } from "./styles";
-import { useSelectMemoryStarByMemId } from "../../api/generated/memory-star-controller/memory-star-controller";
+import { useSelectMemoryStarByMemId } from "../../../api/generated/memory-star-controller/memory-star-controller";
 import { useParams } from "next/navigation";
-import { MemoryStarRepDto } from "../../api/generated/model";
+import { MemoryStarRepDto } from "../../../api/generated/model";
 
 const MyPost = () => {
     const params = useParams();
