@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
-import { PostType } from "../../types/postType";
 import { Comment } from "../comment";
 import axios from "axios";
 import { PostWrapper, PostImage, Author, LikeButton, Header, AuthorImage, Nickname, More, Body, ContentWrapper, Title, Content, Footer, LikeSection, Count, CommentInputContainer, SubmitButton, CommentInput, NoComment } from "./styles";
@@ -12,9 +11,11 @@ import send from "/public/send_comment.svg";
 import { useGetLoginedUserId } from "../../api/generated/member-controller/member-controller";
 import { useCreateLikeMemoryStar, useDeleteLikeMemoryStar, useSelectMemoryStarByMemId } from "../../api/generated/memory-star-controller/memory-star-controller";
 import { useCreateMemComment, useDeleteMemComment, useGetMemComment, useUpdateMemComment } from "../../api/generated/mem-comment-controller/mem-comment-controller";
+import { MemoryStarType } from "../../types/postType";
+import { MemoryStarRepDto } from "../../api/generated/model";
 
 interface PostProps {
-    post: PostType;
+    post: MemoryStarRepDto;
 }
 
 /////////////////////////////////////
@@ -25,17 +26,16 @@ interface PostProps {
 
 
 export const Post: React.FC<PostProps> = ({ post }) => {
-    // const server_url = process.env.NEXT_PUBLIC_SERVER_URL;
     const commentInputRef = useRef<HTMLInputElement>(null);
-
-    // const [likes, setLikes] = useState(post.likes);
     const [newComment, setNewComment] = useState("");
     // 어떤 댓글에 답글을 다는지 저장 (null이면 일반 댓글, id가 있으면 대댓글)
     const [replyTo, setReplyTo] = useState<{ id: number; name: string } | null>(null);
+    const memoryId = post.memory_id!;
     // 1. 유저 정보 및 포스트 상세 데이터 가져오기
     const { data: loginUserId } = useGetLoginedUserId();
-    const { data: starData, refetch: refetchStarInfo } = useSelectMemoryStarByMemId(post.id);
-    const { data: rawComments, refetch: refetchComments } = useGetMemComment(post.id);
+    const { data: starData, refetch: refetchStarInfo } = useSelectMemoryStarByMemId(memoryId);
+    const { data: rawComments, refetch: refetchComments } = useGetMemComment(memoryId);
+    const currentPost = starData || post;
 
     // 2. 좋아요 관련 Mutation 훅
     const { mutate: addLike } = useCreateLikeMemoryStar();
@@ -46,37 +46,39 @@ export const Post: React.FC<PostProps> = ({ post }) => {
         mutation: {
             onSuccess: () => {
                 setNewComment("");
-                refetchStarInfo(); // 댓글 작성 후 데이터 갱신
+                setReplyTo(null);
+                refetchComments(); // 목록 갱신
+                refetchStarInfo(); // 댓글 개수 갱신
             }
         }
     });
 
     // 4. 댓글 삭제 Mutation 훅
-    const { mutate: deleteComment } = useDeleteMemComment({
+    const { mutate: deleteCommentAction } = useDeleteMemComment({
         mutation: {
             onSuccess: () => {
-                refetchComments(); // 댓글 삭제 후 데이터 갱신
+                refetchComments();
+                refetchStarInfo();
             }
         }
     });
 
     // 5. 댓글 수정 Mutation 훅
-    const { mutate: saveComment } = useUpdateMemComment({
+    const { mutate: saveCommentAction } = useUpdateMemComment({
         mutation: {
-            onSuccess: () => {
-                refetchComments(); // 댓글 수정 후 데이터 갱신
-            }
+            onSuccess: () => refetchComments()
         }
-    });
+    }
+    );
 
     // 좋아요 토글 로직 대체
     const toggleLike = (type: "LIKE1" | "LIKE2" | "LIKE3") => {
-        const isCurrentlyLiked = starData?.reactions?.[type]?.isLiked;
+        const isCurrentlyLiked = currentPost.reactions?.[type]?.isLiked;
 
         if (isCurrentlyLiked) {
-            cancelLike({ memoryId: post.id, type }, { onSuccess: () => refetchStarInfo() });
+            cancelLike({ memoryId, type }, { onSuccess: () => refetchStarInfo() });
         } else {
-            addLike({ memoryId: post.id, type }, { onSuccess: () => refetchStarInfo() });
+            addLike({ memoryId, type }, { onSuccess: () => refetchStarInfo() });
         }
     };
 
@@ -85,16 +87,10 @@ export const Post: React.FC<PostProps> = ({ post }) => {
             createComment({
                 data: {
                     content: newComment.trim(),
-                    memory_id: post.id,
+                    memory_id: memoryId,
                     parent_id: replyTo ? replyTo.id : null,
                 }
-            }, {
-            onSuccess: () => {
-                setNewComment("");
-                setReplyTo(null); // 전송 후 답글 모드 해제
-                refetchComments();
-            }
-        });
+            });
         }
     };
 
@@ -105,15 +101,21 @@ export const Post: React.FC<PostProps> = ({ post }) => {
         }
     };
 
+    const handleReplyClick = (id: number, name: string) => {
+        setReplyTo({ id, name });
+        if (commentInputRef.current) {
+            commentInputRef.current.focus();
+            commentInputRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    };
+
     // 1. organizedComments: 평면 데이터를 계층 구조(대댓글)로 가공
     const organizedComments = useMemo(() => {
-        if (!rawComments?.content) return []; // Orval/Swagger 구조에 따라 content 확인
-
+        const commentList = rawComments?.content || [];
         const map = new Map();
         const roots: any[] = [];
 
-        // 모든 댓글을 Map에 등록 (replies 배열 초기화)
-        rawComments.content.forEach((c: any) => {
+        commentList.forEach((c: any) => {
             map.set(c.comment_id, { ...c, replies: [] });
         });
 
@@ -130,17 +132,6 @@ export const Post: React.FC<PostProps> = ({ post }) => {
         return roots;
     }, [rawComments]);
 
-    // 2. 답글 달기 클릭 시 포커스 로직
-    const handleReplyClick = (id: number, name: string) => {
-        setReplyTo({ id, name });
-        
-        // 입력창으로 스무스하게 포커스 이동
-        if (commentInputRef.current) {
-            commentInputRef.current.focus();
-            // 필요한 경우 스크롤 이동
-            commentInputRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
-    };
     // const [loginUserId, setLoginUserId] = useState<number | null>(null);
     // const [starPage, setStarPage] = useState<any | null>(null);
     // const [comments, setComments] = useState(post.comments || []);
@@ -301,40 +292,41 @@ export const Post: React.FC<PostProps> = ({ post }) => {
             <Header>
                 {/* 글쓴이 이미지 받아와야 함 */}
                 <Author><AuthorImage src={"/maru.svg"} alt="" width={36} height={36} />
-                    <Nickname>{post.author}</Nickname></Author> <More><Image src={more} alt="" width={48} height={48} /></More>
+                    <Nickname>{currentPost.writer_name}</Nickname></Author> <More><Image src={more} alt="" width={48} height={48} /></More>
             </Header>
             <Body>
                 <ContentWrapper>
-                    <Title>{post.title}</Title>
-                    <Content>{post.content}</Content>
+                    <Title>{currentPost.name}</Title>
+                    <Content>{currentPost.content}</Content>
                 </ContentWrapper>
-                {post.imageUrl && <PostImage src={post.imageUrl} alt="" width={328} height={328} />}
+                {currentPost.img_url && <PostImage src={currentPost.img_url} alt="" width={328} height={328} />}
             </Body>
             <Footer>
                 <LikeSection>
-                    <LikeButton $active={starData?.reactions?.LIKE1?.isLiked ?? false} onClick={() => toggleLike("LIKE1")}>
-                        🥰 {starData?.reactions?.LIKE1?.count || 0}
+                    <LikeButton $active={currentPost.reactions?.["LIKE1"]?.isLiked ?? false} onClick={() => toggleLike("LIKE1")}>
+                        🥰 {currentPost.reactions?.["LIKE1"]?.count || 0}
                     </LikeButton>
-                    <LikeButton $active={starData?.reactions?.LIKE2?.isLiked ?? false} onClick={() => toggleLike("LIKE2")}>
-                        😮 {starData?.reactions?.LIKE2?.count || 0}
+                    <LikeButton $active={currentPost.reactions?.["LIKE2"]?.isLiked ?? false} onClick={() => toggleLike("LIKE2")}>
+                        😮 {currentPost.reactions?.["LIKE2"]?.count || 0}
                     </LikeButton>
-                    <LikeButton $active={starData?.reactions?.LIKE3?.isLiked ?? false} onClick={() => toggleLike("LIKE3")}>
-                        😢 {starData?.reactions?.LIKE3?.count || 0}
+                    <LikeButton $active={currentPost.reactions?.["LIKE3"]?.isLiked ?? false} onClick={() => toggleLike("LIKE3")}>
+                        😢 {currentPost.reactions?.["LIKE3"]?.count || 0}
                     </LikeButton>
                 </LikeSection>
-                <Count>
-                    <Image src={comment} alt="" width={24} height={24} /> {starData?.commentNumber || 0}
+                <Count>comment
+                    <Image src={comment} alt="" width={24} height={24} /> {currentPost.commentNumber || 0}
                 </Count>
             </Footer>
             {/* 이 사이에 검은색 구분선 넣어야 함 */}
             <CommentInputContainer>
                 {replyTo && (
                     <div style={{ fontSize: "12px", color: "gray", marginBottom: "4px" }}>
-                        {replyTo.name}님께 답글 남기는 중... 
+                        <span>{replyTo.name}님께 답글 남기는 중...</span>
                         <button onClick={() => setReplyTo(null)}>취소</button>
                     </div>
                 )}
                 <CommentInput
+                    ref={commentInputRef}
                     type="text"
                     placeholder={replyTo ? "답글을 입력하세요..." : "댓글을 입력하세요..."}
                     value={newComment}
@@ -344,18 +336,17 @@ export const Post: React.FC<PostProps> = ({ post }) => {
                 <SubmitButton onClick={handleAddComment}><Image src={send} alt="" /></SubmitButton>
             </CommentInputContainer>
             <div>
-                
-                {organizedComments && organizedComments.length > 0 ? (
+                {organizedComments.length > 0 ? (
                     organizedComments.map((comment) => (
-                <Comment
-                    key={comment.comment_id}
-                    comment={comment}
-                    currentUserId={loginUserId}
-                    onReply={handleReplyClick}
-                    onDelete={() => deleteComment({ commentId: comment.comment_id })}
-                    onSave={(id: number, content: string) => saveComment({ data: { comment_id: id, content } })}
+                        <Comment
+                            key={comment.comment_id}
+                            comment={comment}
+                            currentUserId={loginUserId}
+                            onReply={handleReplyClick}
+                            onDelete={(id) => deleteCommentAction({ commentId: id })}
+                            onSave={(id, content) => saveCommentAction({ data: { comment_id: id, content } })}
                         />
-            ))
+                    ))
                 ) : (
                     <NoComment>아직 댓글이 없어요. <br />가장 먼저 댓글을 남겨보세요.</NoComment>
                 )}
