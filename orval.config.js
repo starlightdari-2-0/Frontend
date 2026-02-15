@@ -1,3 +1,5 @@
+require("dotenv").config({ path: "./.env" }); // .env 파일을 읽어옴
+
 module.exports = {
     starlight: {
         input: `${process.env.NEXT_PUBLIC_SERVER_URL}/v3/api-docs`,

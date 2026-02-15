@@ -1,5 +1,3 @@
-import { CommentType } from "./commentType";
-
 export interface PostType {
     id: number;
     author: string;
@@ -12,5 +10,5 @@ export interface PostType {
         like2: number;
         like3: number;
     };
-    comments: CommentType[];
+    comments: number;
 }
